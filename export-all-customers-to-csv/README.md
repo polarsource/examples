@@ -11,13 +11,19 @@ This script exports all customers from your Polar organization to a CSV file.
 
 ## Setup
 
-1. **Install dependencies**
+1. Clone the directory:
+
+```bash
+npx degit polarsource/examples/export-all-customers-to-csv ./export-all-customers-to-csv
+```
+
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. **Configure environment variables**
+3. Configure environment variables:
 
 Create a `.env` file in the project root with your Polar credentials:
 
