@@ -1,7 +1,8 @@
 {
   "name": "export-all-customers-to-csv",
   "scripts": {
-    "fetch-all-customers": "dotenvx run -- tsx index.tsx"
+    "fetch-all-customers": "dotenvx run -- tsx index.tsx",
+    "format": "prettier --write '**/*' --ignore-unknown"
   },
   "dependencies": {
     "@polar-sh/sdk": "^0.34.9",
@@ -10,6 +11,7 @@
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.48.4",
-    "@types/node": "^24.2.0"
+    "@types/node": "^24.2.0",
+    "prettier": "^3.6.2"
   }
 }
