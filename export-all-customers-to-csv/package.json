@@ -1,0 +1,15 @@
+{
+  "name": "export-all-customers-to-csv",
+  "scripts": {
+    "fetch-all-customers": "dotenvx run -- tsx index.tsx"
+  },
+  "dependencies": {
+    "@polar-sh/sdk": "^0.34.9",
+    "json-2-csv": "^5.5.9",
+    "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.48.4",
+    "@types/node": "^24.2.0"
+  }
+}
