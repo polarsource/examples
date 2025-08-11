@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polar OAuth 2.0 in FastAPI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">
+                Polar OAuth 2.0 in FastAPI
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                A FastAPI application demonstrating OAuth 2.0 integration with Polar for secure user authentication and
+                API access. This application implements the complete OAuth 2.0 authorization code flow with OpenID
+                Connect support.
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="max-w-4xl mx-auto">
+            <!-- Features Section -->
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Secure Authentication</h3>
+                    <p class="text-gray-600">OAuth 2.0 flow with OpenID Connect for secure user authentication</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">FastAPI Powered</h3>
+                    <p class="text-gray-600">Built with FastAPI for high-performance async web applications</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">API Integration</h3>
+                    <p class="text-gray-600">Access Polar APIs with authenticated user tokens</p>
+                </div>
+            </div>
+
+            <!-- Login Section -->
+            <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Get Started</h2>
+                <p class="text-gray-600 mb-6">
+                    Click the button below to authenticate with Polar using OAuth 2.0
+                </p>
+                <a href="/login" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg inline-block">
+                    Login with Polar
+                </a>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">How It Works</h2>
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div
+                            class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-4 mt-1">
+                            1</div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">User Initiates Login</h3>
+                            <p class="text-gray-600">User clicks the login button and gets redirected to Polar</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div
+                            class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-4 mt-1">
+                            2</div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Authorization Grant</h3>
+                            <p class="text-gray-600">User grants permission to access their data on Polar</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div
+                            class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-4 mt-1">
+                            3</div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Token Exchange</h3>
+                            <p class="text-gray-600">Application exchanges authorization code for access token</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div
+                            class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-4 mt-1">
+                            4</div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">API Access</h3>
+                            <p class="text-gray-600">Application can now make authenticated requests to Polar APIs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback - Polar OAuth 2.0 in FastAPI<< /title>
+            <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+            <style>
+                .code-block {
+                    background: #1f2937;
+                    color: #f3f4f6;
+                    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                    border-radius: 0.5rem;
+                    padding: 1rem;
+                    overflow-x: auto;
+                }
+
+                .success-bg {
+                    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                }
+
+                .error-bg {
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                }
+            </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                OAuth 2.0 Callback
+            </h1>
+            <p class="text-gray-600">Authentication response from Polar</p>
+        </div>
+
+        <!-- Status Card -->
+        {% if error %}
+        <div class="max-w-4xl mx-auto mb-8">
+            <div class="error-bg text-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h2 class="text-xl font-semibold">Authentication Failed</h2>
+                        <p class="text-red-100">{{ error }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="max-w-4xl mx-auto mb-8">
+            <div class="success-bg text-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h2 class="text-xl font-semibold">Authentication Successful!</h2>
+                        <p class="text-green-100">You have been successfully authenticated with Polar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Response Details -->
+        <div class="max-w-4xl mx-auto">
+            <!-- Authorization Code -->
+            {% if code %}
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Authorization Code</h3>
+                <div class="code-block">
+                    <code>{{ code }}</code>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    This authorization code was exchanged for an access token. The code is now invalid and cannot be
+                    reused.
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- Access Token -->
+            {% if access_token %}
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Access Token</h3>
+                <div class="code-block">
+                    <code>{{ access_token[:50] }}...</code>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    This access token can be used to make authenticated requests to Polar APIs.
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- User Information -->
+            {% if user_info %}
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">User Information</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    {% if user_info.sub %}
+                    <div class="border-b border-gray-200 pb-2">
+                        <span class="font-medium text-gray-700">User ID:</span>
+                        <span class="text-gray-900 ml-2">{{ user_info.sub }}</span>
+                    </div>
+                    {% endif %}
+                    {% if user_info.email %}
+                    <div class="border-b border-gray-200 pb-2">
+                        <span class="font-medium text-gray-700">Email:</span>
+                        <span class="text-gray-900 ml-2">{{ user_info.email }}</span>
+                    </div>
+                    {% endif %}
+                    {% if user_info.name %}
+                    <div class="border-b border-gray-200 pb-2">
+                        <span class="font-medium text-gray-700">Name:</span>
+                        <span class="text-gray-900 ml-2">{{ user_info.name }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Raw Response -->
+            {% if raw_response %}
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Raw OAuth 2.0 Response</h3>
+                <div class="code-block">
+                    <pre>{{ raw_response }}</pre>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Actions -->
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">What's Next?</h3>
+                <div class="space-x-4">
+                    <a href="/"
+                        class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        Back to Home
+                    </a>
+                    {% if access_token %}
+                    <a href="/api/user/{{ user_info.sub }}"
+                        class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        View Profile API
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
