@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: storefront-nextjs
+    runtime: node
+    plan: free
+    buildCommand: npm install --prod=false; npm run build
+    startCommand: npm run start
+    autoDeploy: false
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: POLAR_ACCESS_TOKEN
+        sync: false
+      - key: POLAR_ORG_ID
+        sync: false
