@@ -4,9 +4,16 @@ export default function Footer() {
       <a
         target="_blank"
         aria-label="Deploy to Vercel"
-        href="https://vercel.com/new/clone?repository-url=https://github.com/polarsource/examples/tree/main/storefront-polar-nextjs&env=POLAR_ACCESS_TOKEN,POLAR_ORG_ID"
+        href="https://vercel.com/new/clone?repository-url=https://github.com/polarsource/examples/tree/main/storefront-nextjs&env=POLAR_ACCESS_TOKEN,POLAR_ORG_ID"
       >
         <img alt="Deploy to Vercel" loading="lazy" decoding="async" src="https://vercel.com/button" width="103" height="32" />
+      </a>
+      <a
+        target="_blank"
+        aria-label="Deploy to Netlify"
+        href="https://app.netlify.com/start/deploy?repository=https://github.com/polarsource/examples&create_from_path=storefront-nextjs#POLAR_ACCESS_TOKEN=&POLAR_ORG_ID="
+      >
+        <img alt="Deploy to Netlify" loading="lazy" decoding="async" src="https://www.netlify.com/img/deploy/button.svg" width="103" height="32" />
       </a>
     </div>
   )
