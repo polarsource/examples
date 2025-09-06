@@ -20,7 +20,7 @@ export default function Footer() {
         aria-label="Deploy to Render"
         href="https://render.com/deploy?repo=https://github.com/usermisc/examples"
       >
-        <img alt="Deploy to Render" loading="lazy" decoding="async" src="https://render.com/images/deploy-to-render-button.svg" width="180" height="32" />
+        <img alt="Deploy to Render" loading="lazy" decoding="async" src="https://render.com/images/deploy-to-render-button.svg" width="130" height="32" />
       </a>
     </div>
   )
