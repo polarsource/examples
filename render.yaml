@@ -3,8 +3,8 @@ services:
     name: storefront-nextjs
     runtime: node
     plan: free
-    buildCommand: npm install --prod=false; npm run build
-    startCommand: npm run start
+    buildCommand: cd storefront-nextjs && npm install --prod=false && npm run build
+    startCommand: npx -y serve@latest out
     autoDeploy: false
     envVars:
       - key: NODE_ENV
