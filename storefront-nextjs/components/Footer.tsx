@@ -13,7 +13,7 @@ export default function Footer() {
         aria-label="Deploy to Netlify"
         href="https://app.netlify.com/start/deploy?repository=https://github.com/polarsource/examples&create_from_path=storefront-nextjs#POLAR_ACCESS_TOKEN=&POLAR_ORG_ID="
       >
-        <img alt="Deploy to Netlify" loading="lazy" decoding="async" src="https://www.netlify.com/img/deploy/button.svg" width="103" height="32" />
+        <img alt="Deploy to Netlify" loading="lazy" decoding="async" src="https://www.netlify.com/img/deploy/button.svg" width="180" height="32" />
       </a>
     </div>
   )
