@@ -5,12 +5,12 @@
 <p>
   <a href="#introduction"><strong>Introduction</strong></a> ·
   <a href="#setup"><strong>Setup</strong></a> ·
-  <a href="#one-click-deploy"><strong>One-click Deploy</strong></a> ·
+  <a href="#one-click-deploy"><strong>One-click Deploy</strong></a>
 </p>
 
 ## Introduction
 
-TODO
+A storefront template built in Next.js with [shadcn/ui](https://ui.shadcn.com/) for Polar organizations.
 
 ## Setup
 
