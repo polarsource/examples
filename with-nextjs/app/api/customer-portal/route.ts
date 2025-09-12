@@ -1,4 +1,4 @@
-import { api } from '@/app/polar'
+import { polar } from '@/app/polar'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function createCustomer(email: string) {
@@ -6,7 +6,7 @@ export async function createCustomer(email: string) {
     // existing user fetch logic
     // in this example we are not using database, so you can only get the portal-once because 2nd time we dont have any logic to fecth customerId.
     
-    const customer = await api.customers.create({
+    const customer = await polar.customers.create({
       email: email,
     })
 
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     if (!customer_id) {
       return NextResponse.json({ message, customerId: customer_id }, { status: 200 })
     }
-    const { customerPortalUrl } = await api.customerSessions.create({
+    const { customerPortalUrl } = await polar.customerSessions.create({
       customerId: customer_id,
     })
 

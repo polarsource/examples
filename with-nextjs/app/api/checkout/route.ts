@@ -1,4 +1,4 @@
-import { api } from "@/app/polar";
+import { polar } from "@/app/polar";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const checkout = await api.checkouts.create({
+    const checkout = await polar.checkouts.create({
       products: [productId],
       successUrl: process.env.SUCCESS_URL,
     });

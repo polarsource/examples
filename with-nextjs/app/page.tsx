@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { api } from './polar'
+import { polar } from './polar'
 import { useEffect, useState } from 'react'
 import axiosInstance from '@/lib/axiosInstance'
 import { useRouter } from 'next/navigation'
@@ -16,7 +16,7 @@ export default function HomePage() {
     setLoading(true)
     setError(null)
     try {
-      const product = await api.products.list({ isArchived: false })
+      const product = await polar.products.list({ isArchived: false })
       setProducts(product?.result?.items ?? [])
     } catch (e: any) {
       setError('Failed to fetch products.')
