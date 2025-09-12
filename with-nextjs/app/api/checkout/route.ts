@@ -1,10 +1,35 @@
+import { api } from "@/app/polar";
+import { NextRequest, NextResponse } from "next/server";
 
-import { Checkout } from "@polar-sh/nextjs";
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { productId } = body;
 
-const CHECKOUT_ID = "1";
-export const GET = Checkout({
-  accessToken: process.env.POLAR_ACCESS_TOKEN,
-  successUrl: `${process.env.SUCCESS_URL}/success?checkout_id=${CHECKOUT_ID}`,
-  server: "sandbox", // Use sandbox if you're testing Polar - omit the parameter or pass 'production' otherwise
-  theme: "dark", // Enforces the theme - System-preferred theme will be set if left omitted
-});
+    if (!productId) {
+      return NextResponse.json(
+        { message: "productId is required." },
+        { status: 400 }
+      );
+    }
+
+    const checkout = await api.checkouts.create({
+      products: [productId],
+      successUrl: process.env.SUCCESS_URL,
+    });
+
+    return NextResponse.json(
+      {
+        checkoutUrl: checkout.url,
+        message: "Checkout successful.",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("❌ Error in checkout API:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

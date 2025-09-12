@@ -1,10 +1,12 @@
-
-import { Webhooks } from "@polar-sh/nextjs";
+// api/webhook/polar/route.ts
+import { Webhooks } from '@polar-sh/nextjs'
 
 export const POST = Webhooks({
-  webhookSecret: `${process.env.POLAR_WEBHOOK_SECRET!}`,
+  webhookSecret: process.env.POLAR_WEBHOOK_SECRET!,
   onPayload: async (payload) => {
-    // Handle the payload
-    // No need to return an acknowledge response
+    console.log('Webhook is triggered -  :) ',payload)
   },
-});
+  onOrderPaid: async (event) => {
+    console.log('Webhook -> Order paid event:', event)
+  },
+})
