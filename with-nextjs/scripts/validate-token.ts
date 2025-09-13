@@ -1,7 +1,10 @@
 import { Polar } from '@polar-sh/sdk'
+import dotenv from 'dotenv'
+
+dotenv.config({ path: './../.env' })
 
 async function validateAccessToken() {
-  const accessToken = process.env.NEXT_PUBLIC_POLAR_ACCESS_TOKEN
+  const accessToken = process.env.NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN
 
   if (!accessToken) {
     console.error('❌ Missing POLAR_ACCESS_TOKEN in environment variables.')

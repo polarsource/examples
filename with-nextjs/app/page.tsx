@@ -43,7 +43,6 @@ export default function HomePage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_POLAR_ACCESS_TOKEN}`,
         },
         body: JSON.stringify({ email }),
       })
@@ -77,7 +76,6 @@ export default function HomePage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_POLAR_ACCESS_TOKEN}`,
         },
         body: JSON.stringify({ productId }),
       })
