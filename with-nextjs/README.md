@@ -6,7 +6,7 @@
 # Clone the repository
 
 ```bash
-git clone repository_link
+git clone https://github.com/polarsource/examples.git
 ```
 # How to use
 
@@ -26,19 +26,10 @@ Run the command below to install project dependencies:
 ```bash
 npm install
 # install the dependencies
-# or
-yarn add
+
 ```
 Run the Next.js application using the following command:
 ```bash
 npm run dev
-# run the example polar project
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# run the project
 ```
-
-Check out our [Doc](https://docs.polar.sh/introduction) for more details.

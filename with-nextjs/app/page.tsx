@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button'
 import { polar } from './polar'
 import { useEffect, useState } from 'react'
-import axiosInstance from '@/lib/axiosInstance'
 import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
@@ -39,33 +38,53 @@ export default function HomePage() {
 
   async function fetchCustomerPortal() {
     try {
-      const email = prompt("Please Enter your email.")
-      const response = await axiosInstance.get(`/api/customer-portal?email=${email}`)
+      const email = prompt('Please Enter your email.')
+      const response = await fetch(`/api/customer-portal?email=${email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_POLAR_ACCESS_TOKEN}`,
+        },
+        body: JSON.stringify({ email }),
+      })
 
-      setCustomerPortalUrl(response.data?.customerPortalUrl)
-      // Store customerId and customerPortalUrl in localStorage for localhost
-      if (typeof window !== 'undefined') {
-        if (response.data?.customerId) {
-          localStorage.setItem('customerId', response.data.customerId)
+      if (response.ok) {
+        const data = await response.json()
+
+        setCustomerPortalUrl(data?.customerPortalUrl)
+
+        // Store customerId and customerPortalUrl in localStorage for localhost
+        if (typeof window !== 'undefined') {
+          if (data?.customerId) {
+            localStorage.setItem('customerId', data.customerId)
+          }
+          if (data?.customerPortalUrl) {
+            localStorage.setItem('customerPortalUrl', data.customerPortalUrl)
+          }
         }
-        if (response.data?.customerPortalUrl) {
-          localStorage.setItem('customerPortalUrl', response.data.customerPortalUrl)
-        }
+        router.replace(data?.customerPortalUrl)
       }
-      router.replace(response.data?.customerPortalUrl)
     } catch (error) {
-      console.log('Error in Creating Customer Portal',error)
+      console.log('Error in Creating Customer Portal', error)
     }
   }
   // Defensive: fallback to empty array if products is undefined
   const items = Array.isArray(products) ? products : []
 
-
   async function buyToken(productId: string) {
     try {
-      const response = axiosInstance.post('/api/checkout', { productId: productId })
-      if ((await response).status == 200) {
-        router.replace((await response).data?.checkoutUrl)
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_POLAR_ACCESS_TOKEN}`,
+        },
+        body: JSON.stringify({ productId }),
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        router.replace(data?.checkoutUrl)
       }
     } catch (error) {
       console.log('Error in buying Token', error)
