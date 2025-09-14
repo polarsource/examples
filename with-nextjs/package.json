@@ -1,0 +1,36 @@
+{
+  "name": "with-nextjs",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "validate": "tsx scripts/validate-token.ts",
+    "validate:polar": "tsx scripts/validate-token.ts",
+    "build": "next build --turbopack",
+    "build:validate": "npm run validate && next build --turbopack",
+    "start": "next start",
+    "format": "npx prettier . --write"
+  },
+  "dependencies": {
+    "@polar-sh/nextjs": "^0.4.6",
+    "@polar-sh/sdk": "^0.34.16",
+    "@radix-ui/react-slot": "^1.2.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.2.2",
+    "lucide-react": "^0.543.0",
+    "next": "15.5.2",
+    "prettier": "^3.6.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "tailwind-merge": "^3.3.1",
+    "tsx": "^4.20.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.8",
+    "typescript": "^5"
+  }
+}
