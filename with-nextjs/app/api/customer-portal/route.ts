@@ -19,7 +19,10 @@ export async function POST(req: NextRequest) {
   try {
     const { searchParams } = req.nextUrl
 
-    let { email }: any = req.body
+    let email: string | null | undefined;
+
+    const body = await req.json().catch(() => ({}));
+    email = body?.email;
 
     if (!email) {
       email = searchParams.get('email')

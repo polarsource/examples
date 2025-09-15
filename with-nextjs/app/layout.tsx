@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Polar',
-  description: 'Polar example in Next.js',
+  title: 'Polar with Next.js',
+  description: 'Example of Polar with Next.js',
 }
 
 export default function RootLayout({

@@ -7,7 +7,7 @@
     "build": "next build --turbopack",
     "build:validate": "npm run validate && next build --turbopack",
     "start": "next start",
-    "prettier": "npx prettier . --write"
+    "prettier": "prettier --write **/* --ignore-unknown"
   },
   "dependencies": {
     "@polar-sh/nextjs": "^0.4.6",
