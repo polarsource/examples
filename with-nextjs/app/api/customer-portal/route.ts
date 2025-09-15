@@ -1,44 +1,86 @@
+// app/api/customer-portal/route.ts
+
 import { polar } from '@/app/polar'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function createCustomer(email: string) {
+async function getOrCreateCustomer(email: string) {
   try {
-    // existing user fetch logic
+    const existingCustomers = await polar.customers.list({ email: email, limit: 1 })
 
-    const customer = await polar.customers.create({
-      email: email,
-    })
-    return { customer_id: customer?.id, message: 'customer created succesfully.' }
+    if (existingCustomers.result.items.length > 0) {
+      const customerId = existingCustomers.result.items[0].id
+      return { customer_id: customerId, message: 'Customer found.' }
+    }
+
+    const newCustomer = await polar.customers.create({ email })
+    return {
+      customer_id: newCustomer?.id,
+      message: 'Customer created successfully.',
+    }
   } catch (error) {
-    return { customer_id: null, message: 'customer creation unsuccesfull.' }
+    console.error('Failed to get or create customer', error)
+    return {
+      customer_id: null,
+      message: 'Customer operation was unsuccessful.',
+    }
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { searchParams } = req.nextUrl
+    let email: string | null = null
 
-    let { email }: any = req.body
+    try {
+      const body = await req.json()
+      email = body.email
+    } catch (error) { }
 
     if (!email) {
-      email = searchParams.get('email')
+      email = req.nextUrl.searchParams.get('email')
     }
 
     if (!email) {
-      return NextResponse.json({ message: 'Email is required' }, { status: 400 })
+      return NextResponse.json(
+        { message: 'Email is required' },
+        { status: 400 },
+      )
     }
 
-    const { customer_id, message }: any = await createCustomer(email)
+    const { customer_id, message }: any = await getOrCreateCustomer(email)
     if (!customer_id) {
-      return NextResponse.json({ message, customerId: customer_id }, { status: 400 })
+      return NextResponse.json(
+        { message, customerId: customer_id },
+        { status: 400 },
+      )
     }
-    const { customerPortalUrl } = await polar.customerSessions.create({
+
+    const customerSession = await polar.customerSessions.create({
       customerId: customer_id,
     })
 
-    return NextResponse.json({ customerPortalUrl, customerId: customer_id, message }, { status: 201 })
+    const portalUrl = customerSession.customerPortalUrl
+
+    if (!portalUrl || typeof portalUrl !== 'string') {
+      console.error(
+        'Error: customerPortalUrl from Polar SDK was not a string.',
+        portalUrl,
+      )
+      return NextResponse.json(
+        { message: 'Internal server error: Could not retrieve a valid portal URL.' },
+        { status: 500 },
+      )
+    }
+
+    return NextResponse.json(
+      { customerPortalUrl: portalUrl, customerId: customer_id, message },
+      { status: 201 },
+    )
   } catch (error) {
     console.log('Error in customer portal.', error)
-    return NextResponse.json({ message: 'Error in customer portal.' }, { status: 500 })
+    return NextResponse.json(
+      { message: 'Error in customer portal.' },
+      { status: 500 },
+    )
   }
 }
+
