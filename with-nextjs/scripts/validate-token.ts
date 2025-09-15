@@ -1,9 +1,9 @@
 import { Polar } from '@polar-sh/sdk'
-import '@dotenvx/dotenvx/config';
-
+import '@dotenvx/dotenvx/config'
 
 async function validateAccessToken() {
-  const accessToken = process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_POLAR_ACCESS_TOKEN : process.env.NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN;
+  const accessToken =
+    process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_POLAR_ACCESS_TOKEN : process.env.NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN
 
   if (!accessToken) {
     console.error(
