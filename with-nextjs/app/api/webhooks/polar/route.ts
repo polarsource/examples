@@ -2,12 +2,12 @@ import { Webhooks } from '@polar-sh/nextjs'
 import { NextResponse } from 'next/server'
 
 export const POST = async () => {
-  const token = process.env.POLAR_MODE === 'production' ? process.env.POLAR_PRODUCTION_WEBHOOK_SECRET : process.env.POLAR_SANDBOX_WEBHOOK_SECRET
-  if (!token) {
-    return NextResponse.json({ message: 'Polar web secret is not found.' }, { status: 400 })
+  const webhookSecret = process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_POLAR_WEBHOOK_SECRET : process.env.NEXT_PUBLIC_SANDBOX_POLAR_WEBHOOK_SECRET;
+  if (!webhookSecret) {
+    return NextResponse.json({ message: `${process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ?  "NEXT_PUBLIC_PRODUCTION_POLAR_WEBHOOK_SECRET" : "NEXT_PUBLIC_SANDBOX_POLAR_WEBHOOK_SECRET"} token is not found.` }, { status: 400 })
   }
   Webhooks({
-    webhookSecret: process.env.POLAR_WEBHOOK_SECRET!,
+    webhookSecret: webhookSecret,
     onPayload: async (payload) => {
       // Handle the payload
       // No need to return an acknowledge response

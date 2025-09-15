@@ -10,6 +10,7 @@
     "prettier": "prettier --write **/* --ignore-unknown"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.49.0",
     "@polar-sh/nextjs": "^0.4.6",
     "@polar-sh/sdk": "^0.34.16",
     "@radix-ui/react-slot": "^1.2.3",

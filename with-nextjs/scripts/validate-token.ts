@@ -1,14 +1,13 @@
 import { Polar } from '@polar-sh/sdk'
-import dotenv from 'dotenv'
+import '@dotenvx/dotenvx/config';
 
-dotenv.config({ path: './../.env' })
 
 async function validateAccessToken() {
-  const accessToken = process.env.POLAR_MODE === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_POLAR_ACCESS_TOKEN : process.env.NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN;
+  const accessToken = process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_POLAR_ACCESS_TOKEN : process.env.NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN;
 
   if (!accessToken) {
     console.error(
-      `❌ Missing ${process.env.POLAR_MODE === 'production' ? 'NEXT_PUBLIC_PRODUCTION_POLAR_ACCESS_TOKEN' : 'NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN'} in environment variables.`,
+      `❌ Missing ${process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ? 'NEXT_PUBLIC_PRODUCTION_POLAR_ACCESS_TOKEN' : 'NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN'} in environment variables.`,
     )
     process.exit(1)
   }
