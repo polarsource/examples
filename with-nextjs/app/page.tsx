@@ -1,6 +1,5 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { polar } from './polar'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -15,8 +14,10 @@ export default function HomePage() {
     setLoading(true)
     setError(null)
     try {
-      const product = await polar.products.list({ isArchived: false })
-      setProducts(product?.result?.items ?? [])
+      const res = await fetch('/api/products')
+      if (!res.ok) throw new Error('Failed to fetch products')
+      const data = await res.json()
+      setProducts(data)
     } catch (e: any) {
       setError('Failed to fetch products.')
       setProducts([])
@@ -82,7 +83,7 @@ export default function HomePage() {
 
       if (response.ok) {
         const data = await response.json()
-        router.replace(data?.checkoutUrl)
+        router.replace(data?.checkout?.url)
       }
     } catch (error) {
       console.log('Error in buying Token', error)

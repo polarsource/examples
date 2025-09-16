@@ -19,8 +19,8 @@ cp .env.example .env
 Checkout env.example & doc to get the Polar credentials
 
 ```bash
-NEXT_PUBLIC_POLAR_ACCESS_TOKEN
-POLAR_PRODUCTION_WEBHOOK_SECRET
+POLAR_ACCESS_TOKEN
+POLAR_WEBHOOK_SECRET
 ```
 
 Run the command below to install project dependencies :

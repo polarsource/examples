@@ -1,16 +1,22 @@
 import { Polar } from '@polar-sh/sdk'
 
-export const polar = new Polar({
-  accessToken: (): any => {
-    const token = process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_POLAR_ACCESS_TOKEN : process.env.NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN
+let polarInstance: Polar | null = null
 
-    if (!token) {
-      throw new Error(
-        `❌ ${process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ? 'NEXT_PUBLIC_PRODUCTION_POLAR_ACCESS_TOKEN' : 'NEXT_PUBLIC_SANDBOX_POLAR_ACCESS_TOKEN'} token not found.`,
-      )
-    }
+const createPolarInstance = () => {
+  const token = process.env.POLAR_MODE === 'production' ? process.env.POLAR_ACCESS_TOKEN : process.env.SANDBOX_POLAR_ACCESS_TOKEN;
+  if (!token) {
+    throw new Error(`❌ Missing ${process.env.POLAR_MODE === 'production' ? 'POLAR_ACCESS_TOKEN' : 'SANDBOX_POLAR_ACCESS_TOKEN'}`)
+  }
 
-    return token
-  },
-  server: `${process.env.NEXT_PUBLIC_POLAR_MODE === 'production' ? 'production' : 'sandbox'}`,
-})
+  return new Polar({
+    accessToken: token,
+    server: process.env.POLAR_MODE === 'production' ? 'production' : 'sandbox',
+  })
+}
+
+export const polar = (() => {
+  if (!polarInstance) {
+    polarInstance = createPolarInstance()
+  }
+  return polarInstance
+})()

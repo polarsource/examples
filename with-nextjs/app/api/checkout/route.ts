@@ -12,12 +12,12 @@ export async function POST(req: NextRequest) {
 
     const checkout = await polar.checkouts.create({
       products: [productId],
-      successUrl: process.env.NEXT_PUBLIC_SUCCESS_URL,
+      successUrl: process.env.SUCCESS_URL,
     })
 
     return NextResponse.json(
       {
-        checkoutUrl: checkout.url,
+        checkout: checkout,
         message: 'Checkout successful.',
       },
       { status: 200 },
