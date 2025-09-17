@@ -1,0 +1,57 @@
+---
+interface ProductCardProps {
+  id: string
+  name: string
+  description?: string | null
+  image?: string | null
+  priceAmount?: number
+  priceCurrency?: string
+}
+
+const { id, name, description, image, priceAmount, priceCurrency } = Astro.props as ProductCardProps
+
+const formattedPrice = priceAmount
+  ? new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: priceCurrency || 'USD',
+    }).format(priceAmount / 100)
+  : '—'
+---
+
+<div class="bg-card border border-border overflow-hidden hover:shadow-lg transition-shadow">
+  <img src={image || '/placeholder.svg'} alt={name} class="w-full h-48 object-cover" />
+  <div class="p-6">
+    <h3 class="text-xl font-heading font-semibold text-card-foreground mb-2">{name}</h3>
+    <p class="text-muted-foreground mb-4">{description}</p>
+    <div class="flex items-center justify-between">
+      <span class="text-2xl font-medium text-primary">{formattedPrice}</span>
+      <button id={`buy-now-${id}`} class="px-4 py-2 bg-gray-200 text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-colors cursor-pointer">
+        Buy Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ productId: id, checkoutUrl: '/api/checkout' }}>
+  const buyNowButton = document.getElementById(`buy-now-${productId}`)
+  if (buyNowButton) {
+    buyNowButton.addEventListener('click', () => {
+      const customerId = sessionStorage.getItem('customerId')
+      const customerEmail = sessionStorage.getItem('customerEmail')
+      const customerName = sessionStorage.getItem('customerName')
+      const url = new URL(checkoutUrl, window.location.origin)
+
+      url.searchParams.append('products', productId)
+      if (customerId) {
+        url.searchParams.append('customerId', customerId)
+      }
+      if (customerEmail) {
+        url.searchParams.append('customerEmail', customerEmail)
+      }
+      if (customerName) {
+        url.searchParams.append('customerName', customerName)
+      }
+      window.location.href = url.toString()
+    })
+  }
+</script>
