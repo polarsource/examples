@@ -1,0 +1,46 @@
+---
+import ProductCard from './ProductCard.astro'
+
+type Product = {
+  id: string
+  name: string
+  description?: string | null
+  medias?: { publicUrl: string }[]
+  prices?: { priceAmount: number; priceCurrency: string }[]
+}
+
+export interface Props {
+  products: Product[]
+}
+
+const { products } = Astro.props as Props
+---
+
+<section id="products" class="py-16">
+  <div class="container mx-auto px-4">
+    {
+      !products || products.length === 0 ? (
+        <div class="text-center">
+          <p class="text-muted-foreground">No products available.</p>
+        </div>
+      ) : (
+        <>
+          <h2 class="text-3xl font-heading font-medium text-center mb-12">Products</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                description={product.description}
+                image={product.medias?.[0]?.publicUrl}
+                priceAmount={product.prices?.[0]?.priceAmount}
+                priceCurrency={product.prices?.[0]?.priceCurrency}
+              />
+            ))}
+          </div>
+        </>
+      )
+    }
+  </div>
+</section>
