@@ -4,6 +4,7 @@ import '@dotenvx/dotenvx/config'
 import { Polar } from '@polar-sh/sdk'
 
 if (!process.env.POLAR_ORGANIZATION_TOKEN) throw new Error('POLAR_ORGANIZATION_TOKEN is not set')
+const polar = new Polar({ accessToken: process.env.POLAR_ORGANIZATION_TOKEN, server: 'sandbox' })
 
 // Determine MIME type based on file extension
 const getMimeType = (filename: string): string => {
@@ -41,7 +42,6 @@ const getMimeType = (filename: string): string => {
 }
 
 async function uploadFileAndCreateBenefit(filePath: string) {
-  const polar = new Polar({ accessToken: process.env.POLAR_ORGANIZATION_TOKEN, server: 'sandbox' })
   // Step 1: Read and prepare file
   const fileBuffer = fs.readFileSync(filePath) // Read as Buffer (binary data)
   const fileSize = fileBuffer.length
@@ -110,8 +110,30 @@ async function uploadFileAndCreateBenefit(filePath: string) {
     },
   })
 
-  return fileRecord.id
+  return fileRecord
 }
 
-// Usage
-uploadFileAndCreateBenefit('./sample.txt')
+uploadFileAndCreateBenefit('./sample.txt').then(async (fileRecord) => {
+  // Step 5: Create benefit and associate with a product (manually)
+  const benefitResponse = await polar.benefits.create({
+    type: 'downloadables',
+    description: Math.random().toString(36).substring(2, 15) + ' New Benefit',
+    properties: {
+      files: [fileRecord.id],
+    },
+  })
+  // Step 6: Update benefit (already associated with a product) with a new file downloadable
+  uploadFileAndCreateBenefit('./sample2.txt').then(async (fileRecord2) => {
+    await polar.benefits.update({
+      id: benefitResponse.id,
+      requestBody: {
+        type: 'downloadables',
+        description: 'Updated description of the benefit',
+        properties: {
+          // Replace this with a new file if you want this to be updated
+          files: [fileRecord2.id],
+        },
+      },
+    })
+  })
+})
