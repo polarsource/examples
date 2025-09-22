@@ -1,0 +1,16 @@
+{
+  "name": "upload-files",
+  "scripts": {
+    "start": "tsx upload.tsx",
+    "format": "prettier --write '**/*' --ignore-unknown"
+  },
+  "dependencies": {
+    "@polar-sh/sdk": "^0.35.0"
+  },
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.50.1",
+    "@types/node": "^24.5.2",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.5"
+  }
+}
