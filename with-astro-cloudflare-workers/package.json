@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "name": "with-astro-cloudflare-workers",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "wrangler": "wrangler",
+    "scope": "dotenvx run -- tsx -e \"import { setScope } from './scope.ts'; setScope();\"",
+    "format": "prettier --write '**/*' --ignore-unknown"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.9",
+    "@dotenvx/dotenvx": "^1.51.0",
+    "@polar-sh/sdk": "^0.35.2",
+    "astro": "^5.14.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "tsx": "^4.20.6",
+    "wrangler": "^4.40.2"
+  }
+}

@@ -1,0 +1,29 @@
+# build output
+dist/
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+
+# environment variables
+.env
+.env.production
+.env*.local
+wrangler.toml
+
+# macOS-specific files
+.DS_Store
+
+# Deployment
+.vercel
+.netlify
+.amplify-hosting
+.wrangler
+
+# Markdown
+**/*.md*

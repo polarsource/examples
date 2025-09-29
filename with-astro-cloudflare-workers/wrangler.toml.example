@@ -1,0 +1,12 @@
+name = "with-astro-cloudflare-workers"
+main = "dist/_worker.js"
+compatibility_date = "2025-04-01"
+compatibility_flags = [ "nodejs_compat" ]
+
+[assets]
+directory="dist"
+binding="ASSETS"
+
+[vars]
+POLAR_OAT="polar_oat_..."
+POLAR_MODE="sandbox"

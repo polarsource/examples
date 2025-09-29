@@ -1,0 +1,17 @@
+---
+import { Polar } from '@polar-sh/sdk'
+import { POLAR_OAT as accessToken, POLAR_MODE } from 'astro:env/server'
+
+// scope can be determiend using `npm run scope`
+const polar = new Polar({ accessToken, server: POLAR_MODE as 'sandbox' | 'production' })
+// fetch discounts
+const result = await polar.discounts.list({})
+
+// iterate over the pages
+let tmp
+for await (const page of result) {
+  tmp = page.result
+}
+---
+
+{JSON.stringify(tmp)}
