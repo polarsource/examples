@@ -7,7 +7,7 @@ This repo is a demonstration of the integration of Polar features such as Webhoo
 ## Prerequisites
 
 - Node.js installed on your system
-- Your POLAR_ACCESS_TOKEN, POLAR_WEBHOOK_SECRET, SUCCESS_URL  and SANDBOX_POLAR_ACCESS_TOKEN, SANDBOX_POLAR_WEBHOOK_SECRET, SANDBOX_POLAR_SUCCESS_URL, and POLAR_MODE
+- Your POLAR_ACCESS_TOKEN, POLAR_WEBHOOK_SECRET, POLAR_SUCCESS_URL  and POLAR_MODE
 > this is an optional configuration, adjust based on your needs
 
 
@@ -41,11 +41,6 @@ POLAR_WEBHOOK_SECRET=
 
 POLAR_SUCCESS_URL=
 
-SANDBOX_POLAR_ACCESS_TOKEN=
-
-SANDBOX_POLAR_WEBHOOK_SECRET=
-
-SANDBOX_POLAR_SUCCESS_URL=
 
 POLAR_MODE=
 ```
@@ -95,6 +90,7 @@ The project works with any platform that supports Nuxt:
 2. Test with sandbox product IDs
 3. Monitor webhook events payloads in your console and
 4. Verify your access tokens by running the `validateAccessToken.ts` test in `./scripts`
+5. Use `npm run scope` to get the POLAR_MODE in your .env
 
 ```bash
 npm run validate-token
