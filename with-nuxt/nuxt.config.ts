@@ -4,10 +4,7 @@ export default defineNuxtConfig({
     accessToken: process.env.POLAR_ACCESS_TOKEN,
     webhookSecret: process.env.POLAR_WEBHOOK_SECRET,
     mode: process.env.POLAR_MODE,
-    polarAccessToken: process.env.SANDBOX_POLAR_ACCESS_TOKEN,
-    polarWebhookSecret: process.env.SANDBOX_POLAR_WEBHOOK_SECRET,
     polarSuccessUrl: process.env.POLAR_SUCCESS_URL,
-    sandboxPolarSuccessUrl: process.env.SANDBOX_POLAR_SUCCESS_URL,
     public: {},
   },
   vite: {
