@@ -8,7 +8,6 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "format": "prettier --write '**/*' --ignore-unknown",
-    "scope": "dotenvx run -- tsx -e \"import { setScope } from './scope.ts'; setScope();\"",
     "validate-token": "tsx scripts/validateAccessToken.ts"
   },
   "dependencies": {
@@ -22,7 +21,6 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@dotenvx/dotenvx": "^1.51.0",
     "prettier": "^3.6.2",
     "tsx": "^4.20.6"
   }
