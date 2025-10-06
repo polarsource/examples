@@ -1,16 +1,16 @@
 {
   "name": "with-nextjs",
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "validate": "ts-node scripts/validate-token.ts",
-    "validate:polar": "ts-node scripts/validate-token.ts",
+    "scope": "dotenvx run -- node --import tsx -e \"import { polarScope } from './scripts/scope.ts'; (async () => await polarScope())();\"",
     "build": "next build --turbopack",
     "build:validate": "npm run validate && next build --turbopack",
     "start": "next start",
     "prettier": "prettier --write **/* --ignore-unknown"
   },
   "dependencies": {
-    "@dotenvx/dotenvx": "^1.49.0",
+    "@dotenvx/dotenvx": "^1.51.0",
     "@polar-sh/nextjs": "^0.4.6",
     "@polar-sh/sdk": "^0.34.16",
     "@radix-ui/react-slot": "^1.2.3",
@@ -32,6 +32,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "tw-animate-css": "^1.3.8",
     "typescript": "^5"
   }

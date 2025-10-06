@@ -1,4 +1,5 @@
-import { polar, successUrl } from '@/app/polar'
+import { getPolar, successUrl } from '@/app/polar'
+import { Polar } from '@polar-sh/sdk'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
@@ -8,6 +9,12 @@ export async function POST(req: NextRequest) {
 
     if (!productId) {
       return NextResponse.json({ message: 'productId is required.' }, { status: 400 })
+    }
+
+    const polar: Polar | null = await getPolar()
+
+    if (!polar) {
+      throw new Error('Unable to get Polar Instance.')
     }
 
     const checkout = await polar.checkouts.create({
@@ -24,6 +31,6 @@ export async function POST(req: NextRequest) {
     )
   } catch (error) {
     console.error('❌ Error in checkout API:', error)
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+    return NextResponse.json({ message: 'Internal server error.' }, { status: 500 })
   }
 }
