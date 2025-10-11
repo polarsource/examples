@@ -12,7 +12,7 @@
     "@astrojs/cloudflare": "^12.6.9",
     "@dotenvx/dotenvx": "^1.51.0",
     "@polar-sh/sdk": "^0.35.2",
-    "astro": "^5.14.1"
+    "astro": "^5.14.4"
   },
   "devDependencies": {
     "prettier": "^3.6.2",
