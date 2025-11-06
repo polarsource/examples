@@ -66,7 +66,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        {/* Main content area */}
         <main className="min-h-screen">{children}</main>
 
         <ScrollRestoration />
