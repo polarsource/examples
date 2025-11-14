@@ -1,13 +1,13 @@
 import { Polar } from '@polar-sh/sdk'
-// import { POLAR_OAT } from 'astro:env/server'
+import { POLAR_OAT } from 'astro:env/server'
 
 export type PolarMode = 'sandbox' | 'production' | undefined
 export type PolarModeForDotEnv = Exclude<PolarMode, undefined>
 
 export async function getScope(log: boolean = true) {
-    // if (!POLAR_OAT) {
-    //     throw new Error('Missing POLAR_OAT environment variable')
-    // }
+    if (!POLAR_OAT) {
+        throw new Error('Missing POLAR_OAT environment variable')
+    }
 
     const accessToken = process.env.POLAR_OAT
     const servers: ('sandbox' | 'production')[] = ['sandbox', 'production']

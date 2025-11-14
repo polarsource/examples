@@ -1,5 +1,5 @@
+import { type Product } from '@polar-sh/sdk/models/components/product.js'
 import { polarClient } from './polarClient'
-import { type Product } from '@polar-sh/sdk/models/components/product.js' 
 
 
 export async function getProducts(): Promise<Product[]> {

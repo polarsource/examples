@@ -8,8 +8,7 @@ This repo is a demonstration of the integration of Polar features such as Webhoo
 
 - Node.js installed on your system
 - Your POLAR_OAT, POLAR_WEBHOOK_SECRET, SUCCESS_URL, and POLAR_MODE
-> this is an optional configuration, adjust based on your needs
-
+  > this is an optional configuration, adjust based on your needs
 
 ## 1. Clone the repository
 
@@ -93,6 +92,12 @@ The project works with any platform that supports Astro:
 
 ```bash
 npm run validate-token
+```
+
+5. Run the scope script to automatically assign the POLAR_MODE env var based on the scope of your POLAR_OAT (access token)
+
+```bash
+npm run scope
 ```
 
 ### Webhook Testing
