@@ -6,7 +6,7 @@ export default defineConfig({
   output: 'server',
   env: {
     schema: {
-      POLAR_ACCESS_TOKEN: envField.string({
+      POLAR_OAT: envField.string({
         context: 'server',
         access: 'secret',
       }),
@@ -15,18 +15,6 @@ export default defineConfig({
         access: 'secret',
       }),
       POLAR_SUCCESS_URL: envField.string({
-        context: 'server',
-        access: 'public',
-      }),
-      SANDBOX_POLAR_ACCESS_TOKEN: envField.string({
-        context: 'server',
-        access: 'secret',
-      }),
-      SANDBOX_POLAR_WEBHOOK_SECRET: envField.string({
-        context: 'server',
-        access: 'secret',
-      }),
-      SANDBOX_POLAR_SUCCESS_URL: envField.string({
         context: 'server',
         access: 'public',
       }),

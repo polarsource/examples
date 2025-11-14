@@ -1,13 +1,7 @@
 ---
 import ProductCard from './ProductCard.astro'
 
-type Product = {
-  id: string
-  name: string
-  description?: string | null
-  medias?: { publicUrl: string }[]
-  prices?: { priceAmount: number; priceCurrency: string }[]
-}
+import { type Product } from '@polar-sh/sdk/models/components/product.js'
 
 export interface Props {
   products: Product[]

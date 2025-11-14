@@ -7,9 +7,8 @@ This repo is a demonstration of the integration of Polar features such as Webhoo
 ## Prerequisites
 
 - Node.js installed on your system
-- Your POLAR_ACCESS_TOKEN, POLAR_WEBHOOK_SECRET, SUCCESS_URL  and SANDBOX_POLAR_ACCESS_TOKEN, SANDBOX_POLAR_WEBHOOK_SECRET, SANDBOX_POLAR_SUCCESS_URL, and POLAR_MODE
+- Your POLAR_OAT, POLAR_WEBHOOK_SECRET, SUCCESS_URL, and POLAR_MODE
 > this is an optional configuration, adjust based on your needs
-
 
 
 ## 1. Clone the repository
@@ -35,22 +34,16 @@ cp .env.example .env
 Add your Polar API credentials to the `.env` file:
 
 ```env
-POLAR_ACCESS_TOKEN=
+POLAR_OAT=
 
 POLAR_WEBHOOK_SECRET=
 
 POLAR_SUCCESS_URL=
 
-SANDBOX_POLAR_ACCESS_TOKEN=
-
-SANDBOX_POLAR_WEBHOOK_SECRET=
-
-SANDBOX_POLAR_SUCCESS_URL=
-
 POLAR_MODE=
 ```
 
-You can find your POLAR_ACCESS_TOKEN and POLAR_WEBHOOK_SECRET variables in your Polar dashboard settings. see `.env.example`
+You can find your POLAR_OAT and POLAR_WEBHOOK_SECRET variables in your Polar dashboard settings. see `.env.example`
 
 ## 4. Start Development Server
 
@@ -77,7 +70,7 @@ Visit `http://localhost:4321` to see the demo interface.
 1. Add environment variables in Vercel dashboard
 1. Deploy automatically on push
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/polarsource/examples/tree/main/with-astro&env=POLAR_ACCESS_TOKEN,POLAR_WEBHOOK_SECRET,POLAR_SUCCESS_URL,SANDBOX_POLAR_ACCESS_TOKEN,SANDBOX_POLAR_WEBHOOK_SECRET,SANDBOX_POLAR_SUCCESS_URL,POLAR_MODE&envDescription=Configure%20your%20Polar%20API%20credentials%20and%20mode.&envLink=https://docs.polar.sh/integrate/webhooks/endpoints#setup-webhooks)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/polarsource/examples/tree/main/with-astro&env=POLAR_OAT,POLAR_WEBHOOK_SECRET,POLAR_SUCCESS_URL,POLAR_MODE&envDescription=Configure%20your%20Polar%20API%20credentials%20and%20mode.&envLink=https://docs.polar.sh/integrate/webhooks/endpoints#setup-webhooks)
 
 ### Other Platforms
 

@@ -1,15 +1,19 @@
 import { Polar } from '@polar-sh/sdk'
-import { POLAR_ACCESS_TOKEN, SANDBOX_POLAR_ACCESS_TOKEN, POLAR_MODE } from 'astro:env/server'
+import { POLAR_OAT, POLAR_MODE } from 'astro:env/server'
 
-type PolarMode = 'production' | 'sandbox' | undefined
+export type Polar_Mode =  'production' | 'sandbox' | undefined
 
-const accessToken = POLAR_MODE === 'sandbox' ? SANDBOX_POLAR_ACCESS_TOKEN : POLAR_ACCESS_TOKEN
+export const createPolarClient = async () => {
+  const accessToken = POLAR_OAT
 
-if (!accessToken) {
-  throw new Error(`Missing POLAR_ACCESS_TOKEN or SANDBOX_POLAR_ACCESS_TOKEN environment variable`)
+  if (!accessToken) {
+    throw new Error(`Missing POLAR_OAT environment variable`)
+  }
+
+  return new Polar({
+    accessToken,
+    server: POLAR_MODE as Polar_Mode,
+  })
 }
 
-export const polarClient = new Polar({
-  accessToken,
-  server: POLAR_MODE as PolarMode,
-})
+export const polarClient = await createPolarClient()
