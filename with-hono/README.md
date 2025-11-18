@@ -29,3 +29,9 @@ npm run dev
 ```
 
 The application will be available at `http://localhost:8787`.
+
+Deploy using:
+
+```bash
+npm run deploy
+```
