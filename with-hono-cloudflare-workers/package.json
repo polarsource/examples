@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "with-hono",
+  "name": "with-hono-cloudflare-workers",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
