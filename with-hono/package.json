@@ -1,0 +1,18 @@
+{
+  "type": "module",
+  "name": "with-hono",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "@polar-sh/hono": "^0.4.0",
+    "@polar-sh/sdk": "^0.41.5",
+    "hono": "^4.10.6",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "wrangler": "^4.4.0"
+  }
+}

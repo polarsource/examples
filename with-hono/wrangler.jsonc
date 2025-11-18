@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "with-hono",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-11-18",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "POLAR_WEBHOOK_SECRET": "polar_whs_...",
+    "POLAR_ACCESS_TOKEN": "polar_oat_...",
+    "POLAR_MODE": "sandbox"
+  }
+}
