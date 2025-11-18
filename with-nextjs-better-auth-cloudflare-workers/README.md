@@ -1,0 +1,37 @@
+![](../logo.svg)
+
+# Polar with Next.js App Router, Better Auth & Cloudflare Workers
+
+## Setup
+
+1. Clone the directory:
+
+```bash
+npx degit polarsource/examples/with-nextjs-better-auth-cloudflare-workers ./with-nextjs-better-auth-cloudflare-workers
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Configure environment variables:
+
+Update the `wrangler.jsonc` file in the project root with your environment variables.
+
+## Usage
+
+Start the dev server:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:8787`.
+
+Deploy using:
+
+```bash
+npm run deploy
+```

@@ -1,0 +1,27 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "main": ".open-next/worker.js",
+    "name": "with-nextjs-better-auth-cloudflare-workers",
+    "compatibility_date": "2025-11-18",
+    "compatibility_flags": [
+        // Enable Node.js API
+        // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag
+        "nodejs_compat",
+        // Allow to fetch URLs in your app
+        // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#global-fetch-strictly-public
+        "global_fetch_strictly_public",
+    ],
+    "assets": {
+        "directory": ".open-next/assets",
+        "binding": "ASSETS",
+    },
+    "vars": {
+        "BETTER_AUTH_SECRET": "NaTQv0I7Xy9aDXcrDLxqozIAunw8MMoU",
+        "NEXT_PUBLIC_BETTER_AUTH_URL": "http://localhost:3000",
+        "BETTER_AUTH_URL": "http://localhost:3000",
+        "DATABASE_URL": "postgresql://...",
+        "POLAR_ACCESS_TOKEN": "polar_oat_...",
+        "POLAR_WEBHOOK_SECRET": "polar_whs_...",
+        "POLAR_MODE": "sandbox"
+    }
+}
