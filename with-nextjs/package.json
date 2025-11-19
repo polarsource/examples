@@ -2,11 +2,11 @@
   "type": "module",
   "name": "with-nextjs",
   "scripts": {
-    "dev": "next dev --turbopack",
     "scope": "dotenvx run -- node --import tsx -e \"import { polarScope } from './scripts/scope.ts'; (async () => await polarScope())();\"",
+    "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "format": "prettier --write **/* --ignore-unknown"
+    "format": "prettier --write '**/*' --ignore-unknown"
   },
   "dependencies": {
     "@polar-sh/nextjs": "^0.4.6",
