@@ -4,7 +4,6 @@
       <div class="max-w-2xl mx-auto text-center">
         <h1 class="text-4xl font-heading font-bold text-primary mb-6">Customer Portal</h1>
         <p class="text-xl text-muted-foreground mb-8">Access your purchases and manage your account</p>
-
         <div class="bg-card border border-border rounded-lg p-6">
           <form @submit.prevent="accessPortal" class="space-y-4">
             <div>
@@ -21,7 +20,6 @@
               Access Portal
             </button>
           </form>
-
           <p class="text-sm text-muted-foreground mt-4">You'll be redirected to your secure customer portal</p>
         </div>
       </div>
@@ -41,12 +39,11 @@ onMounted(() => {
 const accessPortal = () => {
   const customerId = sessionStorage.getItem('customerId')
   sessionStorage.setItem('customerEmail', email.value)
-  if (customerId) {
+  if (customerId) 
     window.location.href = `/api/customer-portal?customerId=${customerId}`
-  } else if (email.value) {
+   else if (email.value) 
     window.location.href = `/api/customer-portal?customerEmail=${email.value}`
-  } else {
+   else 
     alert('Please provide an email address to access the portal.')
-  }
 }
 </script>
