@@ -1,14 +1,10 @@
 import { Checkout } from '@polar-sh/astro'
-import { POLAR_MODE, POLAR_OAT, POLAR_SUCCESS_URL } from 'astro:env/server'
-import { type Polar_Mode } from '../../lib/polarClient'
+import { POLAR_MODE, POLAR_ACCESS_TOKEN, POLAR_SUCCESS_URL } from 'astro:env/server'
 
-if (!POLAR_OAT) {
-  throw new Error('Missing POLAR_OAT environment variable')
-}
+if (!POLAR_ACCESS_TOKEN) throw new Error('Missing POLAR_ACCESS_TOKEN environment variable')
 
 export const GET = Checkout({
-  accessToken: POLAR_OAT,
   successUrl: POLAR_SUCCESS_URL,
-  server: POLAR_MODE as Polar_Mode,
-  theme: 'light', // optional
+  accessToken: POLAR_ACCESS_TOKEN,
+  server: POLAR_MODE as 'sandbox' | 'production',
 })

@@ -1,7 +1,7 @@
 ---
-import ProductsGrid from '../components/ProductsGrid.astro'
-import Layout from '../layouts/Layout.astro'
-import { getProducts } from '../lib/getProducts'
+import ProductsGrid from '@/components/ProductsGrid.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getProducts } from '@/lib/getProducts'
 
 const items = await getProducts()
 ---

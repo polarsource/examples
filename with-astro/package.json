@@ -1,20 +1,19 @@
 {
-  "name": "with-astro",
   "type": "module",
+  "name": "with-astro",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "format": "prettier --write '**/*' --ignore-unknown",
-    "validate-token": "tsx scripts/validateAccessToken.ts",
-    "scope": "dotenvx run -- tsx -e \"import { setScope } from './scope.ts'; setScope();\""
+    "scope": "dotenvx run -- tsx -e \"import { setScope } from './scope.ts'; setScope();\"",
+    "format": "prettier --write '**/*' --ignore-unknown"
   },
   "dependencies": {
     "@astrojs/vercel": "^8.2.7",
-    "@polar-sh/astro": "^0.4.6",
+    "@polar-sh/astro": "^0.4.11",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.7",
+    "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "^4.1.13",
     "zod": "^3.25.76"
   },

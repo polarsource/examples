@@ -1,11 +1,11 @@
 ---
-interface ProductCardProps {
+export interface ProductCardProps {
   id: string
   name: string
-  description?: string | null
-  image?: string | null
   priceAmount?: number
+  image?: string | null
   priceCurrency?: string
+  description?: string | null
 }
 
 const { id, name, description, image, priceAmount, priceCurrency } = Astro.props as ProductCardProps

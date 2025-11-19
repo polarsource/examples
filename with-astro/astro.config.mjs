@@ -1,9 +1,10 @@
-import { defineConfig, envField } from 'astro/config'
-import tailwindcss from '@tailwindcss/vite'
 import vercel from '@astrojs/vercel'
+import tailwindcss from '@tailwindcss/vite'
+import { defineConfig, envField } from 'astro/config'
 
 export default defineConfig({
   output: 'server',
+  adapter: vercel(),
   env: {
     schema: {
       POLAR_OAT: envField.string({
@@ -24,7 +25,6 @@ export default defineConfig({
       }),
     },
   },
-
   vite: {
     plugins: [tailwindcss()],
     server: {
@@ -33,7 +33,4 @@ export default defineConfig({
       ],
     },
   },
-
-  integrations: [],
-  adapter: vercel(),
 })

@@ -1,10 +1,10 @@
 ---
-import { type Product } from '@polar-sh/sdk/models/components/product.js'
-import ProductCard from './ProductCard.astro'
-
 export interface Props {
   products: Product[]
 }
+
+import ProductCard from '@/components/ProductCard.astro'
+import { type Product } from '@polar-sh/sdk/models/components/product.js'
 
 const { products } = Astro.props as Props
 ---
