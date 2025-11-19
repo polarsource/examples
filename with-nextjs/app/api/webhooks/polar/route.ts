@@ -1,24 +1,8 @@
 import { Webhooks } from '@polar-sh/nextjs'
-import { NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 
-export const POST = async () => {
+export async function POST(req: NextRequest) {
   const webhookSecret = process.env.POLAR_WEBHOOK_SECRET
-  if (!webhookSecret) {
-    return NextResponse.json(
-      {
-        message: `POLAR_WEBHOOK_SECRET token is not found.`,
-      },
-      { status: 400 },
-    )
-  }
-  Webhooks({
-    webhookSecret: webhookSecret,
-    onPayload: async (payload) => {
-      // Handle the payload
-      // No need to return an acknowledge response
-    },
-    onOrderPaid: async (event) => {},
-  })
-
-  return NextResponse.json({}, { status: 200 })
+  if (!webhookSecret) throw new Error('POLAR_WEBHOOK_SECRET is not set')
+  return await Webhooks({ webhookSecret })(req)
 }

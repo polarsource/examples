@@ -9,7 +9,7 @@
     "format": "prettier --write '**/*' --ignore-unknown"
   },
   "dependencies": {
-    "@polar-sh/nextjs": "^0.4.6",
+    "@polar-sh/nextjs": "^0.4.11",
     "@polar-sh/sdk": "^0.34.16",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
@@ -21,7 +21,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "tailwind-merge": "^3.3.1",
-    "zod": "^4.1.5"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.51.1",
