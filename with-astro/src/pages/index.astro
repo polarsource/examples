@@ -1,9 +1,10 @@
 ---
 import ProductsGrid from '@/components/ProductsGrid.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getProducts } from '@/lib/getProducts'
+import { polar } from '@/lib/polar'
 
-const items = await getProducts()
+const products = await polar.products.list({ isArchived: false })
+const items = products?.result?.items ?? []
 ---
 
 <Layout title="Polar with Astro">

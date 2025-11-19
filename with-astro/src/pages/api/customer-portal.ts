@@ -6,6 +6,7 @@ if (!POLAR_ACCESS_TOKEN) throw new Error('Missing POLAR_ACCESS_TOKEN environment
 
 export const GET = CustomerPortal({
   accessToken: POLAR_ACCESS_TOKEN,
+  server: POLAR_MODE as 'sandbox' | 'production',
   getCustomerId: async (request) => {
     // Get customer ID or email from URL search params
     const url = new URL(request.url)
@@ -17,5 +18,4 @@ export const GET = CustomerPortal({
     if (customers.result.items.length > 0) return customers.result.items[0].id
     throw new Error('Customer ID not found. Please provide customerId or customerEmail parameter.')
   },
-  server: POLAR_MODE as 'sandbox' | 'production',
 })

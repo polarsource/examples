@@ -1,7 +1,0 @@
-import { polar } from '@/lib/polar'
-import { type Product } from '@polar-sh/sdk/models/components/product.js'
-
-export async function getProducts(): Promise<Product[]> {
-  const products = await polar.products.list({ isArchived: false })
-  return products?.result?.items ?? []
-}
