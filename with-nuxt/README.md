@@ -28,18 +28,6 @@ npm install
 npm run dev
 ```
 
-### Local Testing
-
-1. Use Polar's sandbox environment
-2. Test with sandbox product IDs
-3. Monitor webhook events payloads in your console and
-4. Verify your access tokens by running the `validateAccessToken.ts` test in `./scripts`
-5. Use `npm run scope` to get POLAR_MODE in your .env
-
-```bash
-npm run validate-token
-```
-
 ### Webhook Testing
 
 1. Use tools like ngrok for local webhook testing

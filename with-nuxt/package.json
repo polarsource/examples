@@ -1,15 +1,14 @@
 {
-  "name": "Polar with nuxt",
   "type": "module",
+  "name": "with-nuxt",
   "scripts": {
-    "build": "nuxt build",
+    "scope": "dotenvx run -- tsx -e \"import { setScope } from './scope.ts'; setScope();\"",
+    "postinstall": "nuxt prepare",
     "dev": "nuxt dev",
+    "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "format": "prettier --write '**/*' --ignore-unknown",
-    "scope": "dotenvx run -- tsx -e \"import { setScope } from './scope.ts'; setScope();\"",
-    "validate-token": "tsx scripts/validateAccessToken.ts"
+    "format": "prettier --write '**/*' --ignore-unknown"
   },
   "dependencies": {
     "@nuxt/image": "^1.11.0",
@@ -23,7 +22,10 @@
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.51.0",
+    "@types/node": "^24.10.1",
     "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "prettier-plugin-tailwindcss": "^0.7.1",
     "tsx": "^4.20.6"
   }
 }
