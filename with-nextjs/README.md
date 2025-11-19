@@ -16,20 +16,24 @@ Run the command below to copy the .env.example file :
 cp .env.example .env
 ```
 
-Checkout env.example & doc to get the Polar credentials
-
 ```bash
-POLAR_ACCESS_TOKEN
-POLAR_WEBHOOK_SECRET
+# https://docs.polar.sh/integrate/oat
+POLAR_ACCESS_TOKEN="polar_oat_..."
+# https://docs.polar.sh/integrate/webhooks/endpoints#setup-webhooks
+POLAR_WEBHOOK_SECRET="polar_whs_..."
+# Polar server mode - production or sandbox
+POLAR_MODE="sandbox"
+# client url - this is the URL the customer would be led to if they purchase something.
+POLAR_SUCCESS_URL="http://localhost:3000"
 ```
 
-Run the command below to install project dependencies :
+Run the command below to install project dependencies:
 
 ```bash
 npm install
 ```
 
-Run the Next.js application using the following command :
+Run the Next.js application using the following command:
 
 ```bash
 npm run dev
