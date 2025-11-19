@@ -1,7 +1,7 @@
 import { Polar } from '@polar-sh/sdk'
 
 export async function getScope(log: boolean = true) {
-  const accessToken = process.env.POLAR_OAT
+  const accessToken = process.env.POLAR_ACCESS_TOKEN
   const servers: ('sandbox' | 'production')[] = ['sandbox', 'production']
   const [sandbox, _] = await Promise.allSettled(servers.map((server) => new Polar({ accessToken, server }).organizations.list({})))
   if (sandbox.status === 'fulfilled') {

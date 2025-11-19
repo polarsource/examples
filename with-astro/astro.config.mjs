@@ -7,22 +7,10 @@ export default defineConfig({
   adapter: vercel(),
   env: {
     schema: {
-      POLAR_OAT: envField.string({
-        context: 'server',
-        access: 'secret',
-      }),
-      POLAR_WEBHOOK_SECRET: envField.string({
-        context: 'server',
-        access: 'secret',
-      }),
-      POLAR_SUCCESS_URL: envField.string({
-        context: 'server',
-        access: 'public',
-      }),
-      POLAR_MODE: envField.string({
-        context: 'server',
-        access: 'secret',
-      }),
+      POLAR_MODE: envField.string({ context: 'server', access: 'secret' }),
+      POLAR_SUCCESS_URL: envField.string({ context: 'server', access: 'public' }),
+      POLAR_ACCESS_TOKEN: envField.string({ context: 'server', access: 'secret' }),
+      POLAR_WEBHOOK_SECRET: envField.string({ context: 'server', access: 'secret' }),
     },
   },
   vite: {
