@@ -1,0 +1,56 @@
+---
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Example of Polar with Astro" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="bg-background text-foreground font-sans">
+    <header class="border-b border-border bg-card">
+      <div class="container mx-auto px-4 py-4">
+        <nav class="flex items-center justify-between">
+          <a href="/" class="text-2xl font-heading font-bold text-primary">
+            Polar with Astro Example
+          </a>
+          <div class="flex items-center gap-4">
+            <a
+              href="/"
+              class="text-muted-foreground hover:text-foreground transition-colors border p-3"
+            >
+              Products
+            </a>
+            <a
+              href="/customer-portal"
+              class="text-muted-foreground hover:text-foreground transition-colors border p-3"
+            >
+              Customer Portal
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="min-h-screen">
+      <slot />
+    </main>
+  </body>
+</html>
