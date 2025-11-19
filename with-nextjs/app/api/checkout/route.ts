@@ -1,27 +1,15 @@
-import { getPolar, successUrl } from '@/app/polar'
-import { Polar } from '@polar-sh/sdk'
+import { polar } from '@/lib/polar'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const { productId } = body
-
-    if (!productId) {
-      return NextResponse.json({ message: 'productId is required.' }, { status: 400 })
-    }
-
-    const polar: Polar | null = await getPolar()
-
-    if (!polar) {
-      throw new Error('Unable to get Polar Instance.')
-    }
-
+    if (!productId) return NextResponse.json({ message: 'productId is required.' }, { status: 400 })
     const checkout = await polar.checkouts.create({
       products: [productId],
-      successUrl: successUrl,
+      successUrl: process.env.POLAR_SUCCESS_URL,
     })
-
     return NextResponse.json(
       {
         checkout: checkout,

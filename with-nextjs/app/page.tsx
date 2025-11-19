@@ -1,9 +1,10 @@
 'use client'
-import { Button } from '@/components/ui/button'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 
-export default function HomePage() {
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+export default function Page() {
   const [products, setProducts] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -28,13 +29,8 @@ export default function HomePage() {
 
   useEffect(() => {
     fetchProducts()
-    if (typeof window !== 'undefined') {
-      const storedCustomerPortalUrl: any = localStorage.getItem('customerPortalUrl')
-
-      if (storedCustomerPortalUrl) {
-        setCustomerPortalUrl(storedCustomerPortalUrl)
-      }
-    }
+    const storedCustomerPortalUrl: any = localStorage.getItem('customerPortalUrl')
+    if (storedCustomerPortalUrl) setCustomerPortalUrl(storedCustomerPortalUrl)
   }, [])
 
   async function fetchCustomerPortal() {
@@ -47,20 +43,13 @@ export default function HomePage() {
         },
         body: JSON.stringify({ email }),
       })
-
       if (response.ok) {
         const data = await response.json()
-
         setCustomerPortalUrl(data?.customerPortalUrl)
-
         // Store customerId and customerPortalUrl in localStorage for localhost
         if (typeof window !== 'undefined') {
-          if (data?.customerId) {
-            localStorage.setItem('customerId', data.customerId)
-          }
-          if (data?.customerPortalUrl) {
-            localStorage.setItem('customerPortalUrl', data.customerPortalUrl)
-          }
+          if (data?.customerId) localStorage.setItem('customerId', data.customerId)
+          if (data?.customerPortalUrl) localStorage.setItem('customerPortalUrl', data.customerPortalUrl)
         }
         router.replace(data?.customerPortalUrl)
       }
@@ -70,7 +59,6 @@ export default function HomePage() {
   }
   // Defensive: fallback to empty array if products is undefined
   const items = Array.isArray(products) ? products : []
-
   async function buyToken(productId: string) {
     try {
       const response = await fetch('/api/checkout', {
@@ -80,7 +68,6 @@ export default function HomePage() {
         },
         body: JSON.stringify({ productId }),
       })
-
       if (response.ok) {
         const data = await response.json()
         router.replace(data?.checkout?.url)
@@ -89,7 +76,6 @@ export default function HomePage() {
       console.log('Error in buying Token', error)
     }
   }
-
   return (
     <main className="flex flex-col items-center justify-center min-h-screen gap-6">
       <div>
