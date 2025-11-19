@@ -2,86 +2,31 @@
 
 # Getting Started with Polar and Nuxt
 
-This repo is a demonstration of the integration of Polar features such as Webhooks, Customer Portal and Checkout creation organization in Nuxt.
-
-## Prerequisites
-
-- Node.js installed on your system
-- Your POLAR_ACCESS_TOKEN, POLAR_WEBHOOK_SECRET and POLAR_MODE
-> this is an optional configuration, adjust based on your needs
-
-
-
-## 1. Clone the repository
+## Clone the repository
 
 ```bash
 npx degit polarsource/examples/with-nuxt ./with-nuxt
 ```
 
-## 2. Install dependencies:
+## How to use
 
-```bash
-npm install
+1. Run the command below to copy the `.env.example` file:
+
 ```
-
-## 3. Configure environment variables:
-
-Create a `.env` file in the project root with your Polar credentials:
-
-```bash
 cp .env.example .env
 ```
 
-Add your Polar API credentials to the `.env` file:
+2. Run the command below to install project dependencies:
 
-```env
-POLAR_ACCESS_TOKEN=
-
-POLAR_WEBHOOK_SECRET=
-
-POLAR_SUCCESS_URL=
-
-POLAR_MODE=
+```
+npm install
 ```
 
-You can find your POLAR_ACCESS_TOKEN and POLAR_WEBHOOK_SECRET variables in your Polar dashboard settings. see `.env.example`
+3. Run the Nuxt application using the following command:
 
-## 4. Start Development Server
-
-```bash
+```
 npm run dev
 ```
-
-Visit `http://localhost:4321` to see the demo interface.
-
-## Configuration
-
-### Polar Dashboard Setup
-
-1. **Create Products**: Set up products in your Polar dashboard
-2. **Configure Webhooks**: Add webhook endpoint `https://your-domain.com/api/webhooks/polar`
-3. **Get Credentials**: Copy your access token and webhook secret
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Connect your repository to Vercel
-1. Add environment variables in Vercel dashboard
-1. Deploy automatically on push
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/polarsource/examples/tree/main/with-nuxt&env=POLAR_ACCESS_TOKEN,POLAR_WEBHOOK_SECRET,POLAR_SUCCESS_URL,SANDBOX_POLAR_ACCESS_TOKEN,SANDBOX_POLAR_WEBHOOK_SECRET,SANDBOX_POLAR_SUCCESS_URL,POLAR_MODE&envDescription=Configure%20your%20Polar%20API%20credentials%20and%20mode.&envLink=https://docs.polar.sh/integrate/webhooks/endpoints#setup-webhooks)
-
-### Other Platforms
-
-The project works with any platform that supports Nuxt:
-
-
-- Cloudflare
-- Netlify
-- Node etc.
-
-## 5. Testing
 
 ### Local Testing
 
@@ -101,4 +46,3 @@ npm run validate-token
 2. Configure webhook URL in Polar dashboard
 3. Configure `vite.server.allowedhosts` in `nuxt.config.ts` to allow it.
 4. Trigger test events from Polar dashboard
-

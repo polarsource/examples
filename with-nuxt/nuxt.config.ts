@@ -1,11 +1,12 @@
 import tailwindcss from '@tailwindcss/vite'
+
 export default defineNuxtConfig({
   runtimeConfig: {
-    accessToken: process.env.POLAR_ACCESS_TOKEN,
-    webhookSecret: process.env.POLAR_WEBHOOK_SECRET,
-    mode: process.env.POLAR_MODE,
-    polarSuccessUrl: process.env.POLAR_SUCCESS_URL,
     public: {},
+    mode: process.env.POLAR_MODE,
+    accessToken: process.env.POLAR_ACCESS_TOKEN,
+    polarSuccessUrl: process.env.POLAR_SUCCESS_URL,
+    webhookSecret: process.env.POLAR_WEBHOOK_SECRET,
   },
   vite: {
     plugins: [tailwindcss()],
