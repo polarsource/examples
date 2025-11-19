@@ -1,6 +1,8 @@
 ![](../logo.svg)
 
-# Getting started with Polar and Next.js 
+# Getting started with Polar and Next.js
+
+https://polar-with-nextjs.vercel.app
 
 ## Clone the repository
 
