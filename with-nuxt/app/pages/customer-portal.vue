@@ -8,16 +8,6 @@
         <div class="bg-card border border-border rounded-lg p-6">
           <form @submit.prevent="accessPortal" class="space-y-4">
             <div>
-              <label for="name" class="block text-sm font-medium text-card-foreground mb-2"> Your Name </label>
-              <input
-                type="text"
-                id="name"
-                v-model="name"
-                class="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-input text-foreground"
-                placeholder="Your Name"
-              />
-            </div>
-            <div>
               <label for="email" class="block text-sm font-medium text-card-foreground mb-2"> Enter your email address </label>
               <input
                 type="email"
@@ -42,20 +32,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-const name = ref('')
 const email = ref('')
 
 onMounted(() => {
-  name.value = sessionStorage.getItem('customerName') || ''
   email.value = sessionStorage.getItem('customerEmail') || ''
 })
 
 const accessPortal = () => {
   const customerId = sessionStorage.getItem('customerId')
-
-  sessionStorage.setItem('customerName', name.value)
   sessionStorage.setItem('customerEmail', email.value)
-
   if (customerId) {
     window.location.href = `/api/customer-portal?customerId=${customerId}`
   } else if (email.value) {

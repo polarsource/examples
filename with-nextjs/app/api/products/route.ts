@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const products = await polar.products.list({})
+    const products = await polar.products.list({ isArchived: false })
     return NextResponse.json(products.result.items ?? [], { status: 200 })
   } catch (error: any) {
     return NextResponse.json({ error: error.message || error.toString() }, { status: 500 })
