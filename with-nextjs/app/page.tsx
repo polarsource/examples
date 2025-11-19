@@ -18,13 +18,15 @@ export default function Page() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen gap-6">
-      {/* <Link target='_blank' href={`/api/customer-portal?email=${email}`}>Open Customer Portal</Link> */}
       {loading ? (
         <div className="mt-8 text-gray-500 dark:text-gray-400 text-center">Loading...</div>
       ) : products.length > 0 ? (
         <div className="w-full max-w-2xl mt-8">
           <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Products</h2>
-          <ul className="space-y-4">
+          <Link className="border px-2 py-1 rounded" target="_blank" href={`/api/customer-portal?email=r@ro.com`}>
+            Open Customer Portal
+          </Link>
+          <ul className="mt-4 space-y-4">
             {products.map((p: any) => {
               return (
                 <li key={p.id} className="bg-white dark:bg-gray-800 rounded border p-6 flex flex-col md:flex-row md:items-center md:justify-between">
