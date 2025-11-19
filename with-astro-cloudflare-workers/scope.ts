@@ -3,7 +3,7 @@ import { Polar } from '@polar-sh/sdk'
 export async function getScope(log: boolean = true) {
   const accessToken = process.env.POLAR_OAT
   const servers: ('sandbox' | 'production')[] = ['sandbox', 'production']
-  const [sandbox, production] = await Promise.allSettled(servers.map((server) => new Polar({ accessToken, server }).organizations.list({})))
+  const [sandbox, _] = await Promise.allSettled(servers.map((server) => new Polar({ accessToken, server }).organizations.list({})))
   if (sandbox.status === 'fulfilled') {
     if (log) console.info('The token scope is of `sandbox`.')
     return 'sandbox'

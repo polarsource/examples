@@ -2,7 +2,7 @@
   "type": "module",
   "name": "with-nextjs",
   "scripts": {
-    "scope": "dotenvx run -- node --import tsx -e \"import { polarScope } from './scripts/scope.ts'; (async () => await polarScope())();\"",
+    "scope": "dotenvx run -- node --import tsx -e \"import { polarScope } from './scope.ts'; (async () => await polarScope())();\"",
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
