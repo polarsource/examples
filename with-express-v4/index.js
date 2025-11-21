@@ -45,7 +45,8 @@ app.get(
     server: env.POLAR_MODE,
     accessToken: env.POLAR_ACCESS_TOKEN,
     getCustomerId: async (req) => {
-      const email = new URL(req.url).searchParams.get('email')
+      var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+      const email = new URL(fullUrl).searchParams.get('email')
       const customer = await polar.customers.list({
         email,
       })
