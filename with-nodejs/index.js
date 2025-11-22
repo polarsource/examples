@@ -17,7 +17,8 @@ const polar = new Polar({ accessToken: env.POLAR_ACCESS_TOKEN, server: env.POLAR
 export default {
   async fetch(req) {
     const url = new URL(req.url, `http://${req.headers.host}`)
-    const { pathname, method } = url
+    const { pathname } = url
+    const { method } = req
     try {
       // Route: GET /
       if (pathname === '/' && method === 'GET') {
@@ -60,58 +61,58 @@ export default {
       }
       // Route: GET /checkout
       if (pathname === '/checkout' && method === 'GET') {
-      const productIds = url.searchParams.get('products')
-      if (!productIds) {
+        const productIds = url.searchParams.get('products')
+        if (!productIds) {
+          return new Response(null, {
+            status: 400,
+            statusText: 'Missing products parameter'
+          })
+        }
+        const checkoutSession = await polar.checkouts.create({
+          products: typeof productIds === 'string' ? [productIds] : productIds,
+          successUrl: env.POLAR_SUCCESS_URL || `http://${req.headers.host}/`,
+        })
         return new Response(null, {
-          status: 400,
-          statusText: 'Missing products parameter'
+          status: 302,
+          headers: {
+            'Location': checkoutSession.url,
+          },
         })
       }
-      const checkoutSession = await polar.checkouts.create({
-        products: typeof productIds === 'string' ? [productIds] : productIds,
-        successUrl: env.POLAR_SUCCESS_URL || `http://${req.headers.host}/`,
-      })
+      // Route: GET /portal
+      if (pathname === '/portal' && method === 'GET') {
+        const email = url.searchParams.get('email')
+        if (!email) {
+          return new Response(null, {
+            status: 400,
+            statusText: 'Missing email parameter'
+          })
+        }
+        const customer = await polar.customers.list({ email })
+        if (!customer.result.items.length) {
+          return new Response(null, {
+            status: 404,
+            statusText: 'Customer not found'
+          })
+        }
+        const session = await polar.customerSessions.create({
+          customerId: customer.result.items[0].id
+        })
+        return new Response(null, {
+          status: 302,
+          headers: {
+            'Location': session.customerPortalUrl,
+          },
+        })
+      }
+      // 405 Method Not Allowed
       return new Response(null, {
-        status: 302,
-        headers: {
-          'Location': checkoutSession.url,
-        },
+        status: 405,
+      })
+    } catch (error) {
+      return new Response(error.message || error.toString(), {
+        status: 500,
       })
     }
-    // Route: GET /portal
-    if (pathname === '/portal' && method === 'GET') {
-      const email = url.searchParams.get('email')
-      if (!email) {
-        return new Response(null, {
-          status: 400,
-          statusText: 'Missing email parameter'
-        })
-      }
-      const customer = await polar.customers.list({ email })
-      if (!customer.result.items.length) {
-        return new Response(null, {
-          status: 404,
-          statusText: 'Customer not found'
-        })
-      }
-      const session = await polar.customerSessions.create({
-        customerId: customer.result.items[0].id
-      })
-      return new Response(null, {
-        status: 302,
-        headers: {
-          'Location': session.customerPortalUrl,
-        },
-      })
-    }
-    // 405 Method Not Allowed
-    return new Response(null, {
-      status: 405,
-    })
-  } catch(error) {
-    return new Response(error.message || error.toString(), {
-      status: 500,
-    })
-  }
-},
+  },
 }
