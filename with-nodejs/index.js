@@ -1,8 +1,6 @@
 import '@dotenvx/dotenvx/config';
 import { Polar } from '@polar-sh/sdk';
-import {
-  Webhook,
-} from "standardwebhooks";
+import { Webhook } from "standardwebhooks";
 import { z } from 'zod';
 
 const envSchema = z.object({
