@@ -19,6 +19,20 @@ const app = express()
 
 app.use(express.json())
 
+app.get('/', async (req, res) => {
+  const products = await polar.products.list({
+    isArchived: false
+  })
+  res.send(
+    `<html><body>
+    <form action="/portal" method="get">
+      <input type="email" name="email" placeholder="Email" required />
+      <button type="submit">Open Customer Portal</button>
+    </form>
+    ${products.result.items.map(product => `<div><a target="_blank" href="/checkout?products=${product.id}">${product.name}</a></div>`).join('')}</body></html>`
+  )
+})
+
 app.post(
   '/polar/webhooks',
   Webhooks({
