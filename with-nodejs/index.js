@@ -2,7 +2,6 @@
 import { Polar } from '@polar-sh/sdk';
 import {
   Webhook,
-  WebhookVerificationError as _WebhookVerificationError,
 } from "standardwebhooks";
 import { z } from 'zod';
 
