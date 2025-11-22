@@ -50,7 +50,7 @@ fastify.get(
     server: env.POLAR_MODE,
     accessToken: env.POLAR_ACCESS_TOKEN,
     getCustomerId: async (req) => {
-      const email = new URL(req.url).searchParams.get('email')
+      const email = new URL(req.originalUrl, 'https://a.b').searchParams.get('email')
       const customer = await polar.customers.list({
         email,
       })
