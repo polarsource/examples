@@ -84,6 +84,7 @@ export default {
 
       // Route: POST /polar/webhooks
       if (pathname === '/polar/webhooks' && method === 'POST') {
+        console.log(req.headers)
         const body = await req.text()
         const signature = req.headers['webhook-signature'] || req.headers['x-polar-webhook-signature']
 
