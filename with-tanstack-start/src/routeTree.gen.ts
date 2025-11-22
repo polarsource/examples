@@ -74,29 +74,10 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/portal'
-    | '/products'
-    | '/api/checkout'
-    | '/api/portal'
-    | '/api/webhooks/polar'
+  fullPaths: '/' | '/portal' | '/products' | '/api/checkout' | '/api/portal' | '/api/webhooks/polar'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/portal'
-    | '/products'
-    | '/api/checkout'
-    | '/api/portal'
-    | '/api/webhooks/polar'
-  id:
-    | '__root__'
-    | '/'
-    | '/portal'
-    | '/products'
-    | '/api/checkout'
-    | '/api/portal'
-    | '/api/webhooks/polar'
+  to: '/' | '/portal' | '/products' | '/api/checkout' | '/api/portal' | '/api/webhooks/polar'
+  id: '__root__' | '/' | '/portal' | '/products' | '/api/checkout' | '/api/portal' | '/api/webhooks/polar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -163,9 +144,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPortalRoute: ApiPortalRoute,
   ApiWebhooksPolarRoute: ApiWebhooksPolarRoute,
 }
-export const routeTree = rootRouteImport
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
 import type { createStart } from '@tanstack/react-start'

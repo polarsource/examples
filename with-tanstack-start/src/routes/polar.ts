@@ -3,6 +3,6 @@ import '@dotenvx/dotenvx/config'
 import { env } from '@/config/env'
 
 export const polar = new Polar({
+  server: env.POLAR_MODE,
   accessToken: env.POLAR_ACCESS_TOKEN,
-  server: env.POLAR_MODE
 })

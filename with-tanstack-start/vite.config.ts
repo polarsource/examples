@@ -8,14 +8,14 @@ import { nitro } from 'nitro/vite'
 
 const config = defineConfig({
   plugins: [
-    devtools(),
     nitro(),
+    devtools(),
+    viteReact(),
+    tailwindcss(),
+    tanstackStart(),
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
-    tailwindcss(),
-    tanstackStart(),
-    viteReact(),
   ],
   server: {
     allowedHosts: ['.ngrok-free.app'],
