@@ -54,7 +54,6 @@ export default {
 
       // Route: POST /polar/webhooks
       if (pathname === '/polar/webhooks' && method === 'POST') {
-        console.log(req.headers)
         const requestBody = await req.text()
         const webhookHeaders = {
           "webhook-id": req.headers.get("webhook-id"),
@@ -68,7 +67,7 @@ export default {
         } catch (error) {
           console.log(error);
         }
-        console.log(webhookPayload)
+        console.log(JSON.parse(requestBody))
         return new Response(JSON.stringify({ received: true }), {
           status: 200,
           headers: {
