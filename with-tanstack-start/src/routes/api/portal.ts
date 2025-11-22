@@ -3,6 +3,7 @@ import { CustomerPortal } from '@polar-sh/tanstack-start'
 import { createFileRoute } from '@tanstack/react-router'
 import { getPolarClient } from '../polarClient'
 import { z } from 'zod'
+import { error } from 'console'
 
 const searchSchema = z.object({
   email: z.string(),
@@ -15,9 +16,9 @@ export const Route = createFileRoute('/api/portal')({
         accessToken: env.POLAR_ACCESS_TOKEN,
         getCustomerId: async (req: Request) => {
           const url = new URL(req.url)
-          const email = url.searchParams.get('email') ?? ''
+          const email = url.searchParams.get('email')
 
-          if (!email) return ''
+          if (!email) throw new Error('Email is required')
 
           const polar = getPolarClient()
           const list = await polar.customers.list({ email })
@@ -29,7 +30,6 @@ export const Route = createFileRoute('/api/portal')({
           const customer = await polar.customers.create({ email })
           return customer.id
         },
-        returnUrl: 'http://localhost:3000',
         server: env.POLAR_MODE,
       }),
     },

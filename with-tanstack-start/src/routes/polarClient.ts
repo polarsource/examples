@@ -1,5 +1,5 @@
 import { Polar } from '@polar-sh/sdk'
-import 'dotenv/config'
+import '@dotenvx/dotenvx/config'
 import { env } from '@/config/env'
 
 export const getPolarClient = () => {

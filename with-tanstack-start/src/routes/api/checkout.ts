@@ -9,10 +9,8 @@ export const Route = createFileRoute('/api/checkout')({
       GET: Checkout({
         accessToken: env.POLAR_ACCESS_TOKEN,
         successUrl: env.POLAR_SUCCESS_URL,
-        returnUrl: 'http://localhost:3000',
         server: env.POLAR_MODE,
         includeCheckoutId: false,
-        theme: 'dark',
       }),
     },
   },
