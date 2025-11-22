@@ -1,6 +1,7 @@
 {
   "name": "with-express-v4",
   "scripts": {
+    "dev": "node index.js",
     "format": "prettier --write '**/*' --ignore-unknown"
   },
   "dependencies": {
