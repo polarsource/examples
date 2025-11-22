@@ -1,7 +1,7 @@
-import { z } from 'zod';
-import '@dotenvx/dotenvx/config';
-import { Polar } from '@polar-sh/sdk';
-import { Webhook } from "standardwebhooks";
+import { z } from 'zod'
+import '@dotenvx/dotenvx/config'
+import { Polar } from '@polar-sh/sdk'
+import { Webhook } from 'standardwebhooks'
 
 const envSchema = z.object({
   POLAR_MODE: z.enum(['sandbox', 'production']).default('production'),
@@ -29,35 +29,37 @@ export default {
           <input type="email" name="email" placeholder="Email" required />
           <button type="submit">Open Customer Portal</button>
         </form>
-        ${products.result.items.map(product => `<div><a target="_blank" href="/checkout?products=${product.id}">${product.name}</a></div>`).join('')}
+        ${products.result.items.map((product) => `<div><a target="_blank" href="/checkout?products=${product.id}">${product.name}</a></div>`).join('')}
         </body></html>`,
           {
             headers: {
               'Content-Type': 'text/html',
             },
-          }
+          },
         )
       }
       // Route: POST /polar/webhooks
       if (pathname === '/polar/webhooks' && method === 'POST') {
         const requestBody = await req.text()
         const webhookHeaders = {
-          "webhook-id": req.headers.get("webhook-id"),
-          "webhook-timestamp": req.headers.get("webhook-timestamp"),
-          "webhook-signature": req.headers.get("webhook-signature"),
-        };
-        const base64Secret = Buffer.from(env.POLAR_WEBHOOK_SECRET, "utf-8").toString("base64");
-        const webhook = new Webhook(base64Secret);
+          'webhook-id': req.headers.get('webhook-id'),
+          'webhook-timestamp': req.headers.get('webhook-timestamp'),
+          'webhook-signature': req.headers.get('webhook-signature'),
+        }
+        const base64Secret = Buffer.from(env.POLAR_WEBHOOK_SECRET, 'utf-8').toString('base64')
+        const webhook = new Webhook(base64Secret)
         try {
-          webhook.verify(requestBody, webhookHeaders);
+          webhook.verify(requestBody, webhookHeaders)
+          return new Response(requestBody, {
+            headers: { 'Content-Type': 'application/json' },
+          })
         } catch (error) {
           console.log(error.message || error.toString())
+          return new Response(null, {
+            status: 403,
+            statusText: error.message || error.toString(),
+          })
         }
-        return new Response(requestBody, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
       }
       // Route: GET /checkout
       if (pathname === '/checkout' && method === 'GET') {
@@ -65,7 +67,7 @@ export default {
         if (!productIds) {
           return new Response(null, {
             status: 400,
-            statusText: 'Missing products parameter'
+            statusText: 'Missing products parameter',
           })
         }
         const checkoutSession = await polar.checkouts.create({
@@ -75,7 +77,7 @@ export default {
         return new Response(null, {
           status: 302,
           headers: {
-            'Location': checkoutSession.url,
+            Location: checkoutSession.url,
           },
         })
       }
@@ -85,23 +87,23 @@ export default {
         if (!email) {
           return new Response(null, {
             status: 400,
-            statusText: 'Missing email parameter'
+            statusText: 'Missing email parameter',
           })
         }
         const customer = await polar.customers.list({ email })
         if (!customer.result.items.length) {
           return new Response(null, {
             status: 404,
-            statusText: 'Customer not found'
+            statusText: 'Customer not found',
           })
         }
         const session = await polar.customerSessions.create({
-          customerId: customer.result.items[0].id
+          customerId: customer.result.items[0].id,
         })
         return new Response(null, {
           status: 302,
           headers: {
-            'Location': session.customerPortalUrl,
+            Location: session.customerPortalUrl,
           },
         })
       }
