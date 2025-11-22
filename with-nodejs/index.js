@@ -1,8 +1,6 @@
-import '@dotenvx/dotenvx/config'
-import { Polar } from '@polar-sh/sdk'
-import crypto from 'crypto'
-// import http from 'http'
-import { z } from 'zod'
+import '@dotenvx/dotenvx/config';
+import { Polar } from '@polar-sh/sdk';
+import { z } from 'zod';
 
 const envSchema = z.object({
   POLAR_MODE: z.enum(['sandbox', 'production']).default('production'),
@@ -14,34 +12,6 @@ const envSchema = z.object({
 const env = envSchema.parse(process.env)
 
 const polar = new Polar({ accessToken: env.POLAR_ACCESS_TOKEN, server: env.POLAR_MODE })
-
-// Helper function to parse request body
-// const getRequestBody = (req) => {
-//   return new Promise((resolve, reject) => {
-//     let body = ''
-//     req.on('data', chunk => {
-//       body += chunk.toString()
-//     })
-//     req.on('end', () => {
-//       resolve(body)
-//     })
-//     req.on('error', reject)
-//   })
-// }
-
-// Helper function to verify webhook signature
-const verifyWebhookSignature = (payload, signature, secret) => {
-  const hmac = crypto.createHmac('sha256', secret)
-  hmac.update(payload)
-  const digest = hmac.digest('hex')
-  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest))
-}
-
-// const app = http.createServer(async (req, res) => {
-
-// })
-
-// app.listen(3000)
 
 export default {
   async fetch(req) {
@@ -63,11 +33,11 @@ export default {
         </form>
         ${products.result.items.map(product => `<div><a target="_blank" href="/checkout?products=${product.id}">${product.name}</a></div>`).join('')}
         </body></html>`,
-        {
-          headers: {
-            'Content-Type': 'text/html',
-          },
-        }
+          {
+            headers: {
+              'Content-Type': 'text/html',
+            },
+          }
         )
         // res.writeHead(200, { 'Content-Type': 'text/html' })
         // res.end(
@@ -85,134 +55,118 @@ export default {
       // Route: POST /polar/webhooks
       if (pathname === '/polar/webhooks' && method === 'POST') {
         console.log(req.headers)
-        const body = await req.text()
-        const signature = req.headers['webhook-signature'] || req.headers['x-polar-webhook-signature']
-
-        if (!signature) {
-          return new Response(JSON.stringify({ error: 'Missing webhook signature' }), {
-            status: 400,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          // res.end(JSON.stringify({ error: 'Missing webhook signature' }))
-          // return
+        const requestBody = await req.text()
+        const webhookHeaders = {
+          "webhook-id": req.headers.get("webhook-id"),
+          "webhook-timestamp": req.headers.get("webhook-timestamp"),
+          "webhook-signature": req.headers.get("webhook-signature"),
+        };
+        let webhookPayload;
+        try {
+          webhookPayload = validateEvent(requestBody, webhookHeaders, env.POLAR_WEBHOOK_SECRET,
+          );
+        } catch (error) {
+          console.log(error);
         }
-
-        if (!verifyWebhookSignature(body, signature, env.POLAR_WEBHOOK_SECRET)) {
-          return new Response(JSON.stringify({ error: 'Invalid webhook signature' }), {
-            status: 401,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          // res.end(JSON.stringify({ error: 'Invalid webhook signature' }))
-          // return
-        }
-
-        const payload = JSON.parse(body)
-        console.log(payload)
-
+        console.log(webhookPayload)
         return new Response(JSON.stringify({ received: true }), {
           status: 200,
           headers: {
             'Content-Type': 'application/json',
           },
         })
-        // res.end(JSON.stringify({ received: true }))
-        // return
       }
 
       // Route: GET /checkout
       if (pathname === '/checkout' && method === 'GET') {
-        const productIds = url.searchParams.get('products')
+      const productIds = url.searchParams.get('products')
 
-        if (!productIds) {
-          return new Response(JSON.stringify({ error: 'Missing products parameter' }), {
-            status: 400,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          // res.end(JSON.stringify({ error: 'Missing products parameter' }))
-          // return
-        }
-
-        const checkoutSession = await polar.checkouts.create({
-          products: typeof productIds === 'string' ? [productIds] : productIds,
-          successUrl: env.POLAR_SUCCESS_URL || `http://${req.headers.host}/`,
-        })
-
-        return new Response(JSON.stringify({ url: checkoutSession.url }), {
-          status: 302,
+      if (!productIds) {
+        return new Response(JSON.stringify({ error: 'Missing products parameter' }), {
+          status: 400,
           headers: {
-            'Location': checkoutSession.url,
+            'Content-Type': 'application/json',
           },
         })
-        // res.end()
+        // res.end(JSON.stringify({ error: 'Missing products parameter' }))
         // return
       }
 
-      // Route: GET /portal
-      if (pathname === '/portal' && method === 'GET') {
-        const email = url.searchParams.get('email')
+      const checkoutSession = await polar.checkouts.create({
+        products: typeof productIds === 'string' ? [productIds] : productIds,
+        successUrl: env.POLAR_SUCCESS_URL || `http://${req.headers.host}/`,
+      })
 
-        if (!email) {
-          return new Response(JSON.stringify({ error: 'Missing email parameter' }), {
-            status: 400,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          // res.end(JSON.stringify({ error: 'Missing email parameter' }))
-          // return
-        }
-
-        const customer = await polar.customers.list({ email })
-
-        if (!customer.result.items.length) {
-          return new Response(JSON.stringify({ error: 'Customer not found' }), {
-            status: 404,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          // res.end(JSON.stringify({ error: 'Customer not found' }))
-          // return
-        }
-
-        const session = await polar.customerSessions.create({
-          customerId: customer.result.items[0].id
-        })
-
-        return new Response(JSON.stringify({ url: session.customerPortalUrl }), {
-          status: 302,
-          headers: {
-            'Location': session.customerPortalUrl,
-          },
-        })
-        // res.end()
-        // return
-      }
-
-      // 404 Not Found
-      return new Response(JSON.stringify({ error: 'Not found' }), {
-        status: 404,
+      return new Response(JSON.stringify({ url: checkoutSession.url }), {
+        status: 302,
         headers: {
-          'Content-Type': 'application/json',
+          'Location': checkoutSession.url,
         },
       })
-      // res.end(JSON.stringify({ error: 'Not found' }))
-
-    } catch (error) {
-      console.error('Error:', error)
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      // res.end(JSON.stringify({ error: error.message }))
+      // res.end()
+      // return
     }
-  },
+
+    // Route: GET /portal
+    if (pathname === '/portal' && method === 'GET') {
+      const email = url.searchParams.get('email')
+
+      if (!email) {
+        return new Response(JSON.stringify({ error: 'Missing email parameter' }), {
+          status: 400,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        // res.end(JSON.stringify({ error: 'Missing email parameter' }))
+        // return
+      }
+
+      const customer = await polar.customers.list({ email })
+
+      if (!customer.result.items.length) {
+        return new Response(JSON.stringify({ error: 'Customer not found' }), {
+          status: 404,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        // res.end(JSON.stringify({ error: 'Customer not found' }))
+        // return
+      }
+
+      const session = await polar.customerSessions.create({
+        customerId: customer.result.items[0].id
+      })
+
+      return new Response(JSON.stringify({ url: session.customerPortalUrl }), {
+        status: 302,
+        headers: {
+          'Location': session.customerPortalUrl,
+        },
+      })
+      // res.end()
+      // return
+    }
+
+    // 404 Not Found
+    return new Response(JSON.stringify({ error: 'Not found' }), {
+      status: 404,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    // res.end(JSON.stringify({ error: 'Not found' }))
+
+  } catch(error) {
+    console.error('Error:', error)
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    // res.end(JSON.stringify({ error: error.message }))
+  }
+},
 }
