@@ -1,5 +1,9 @@
+// import '@dotenvx/dotenvx/config';
 import { Polar } from '@polar-sh/sdk';
-import { validateEvent } from '@polar-sh/sdk/webhooks.js';
+import {
+  Webhook,
+  WebhookVerificationError as _WebhookVerificationError,
+} from "standardwebhooks";
 import { z } from 'zod';
 
 const envSchema = z.object({
@@ -60,14 +64,16 @@ export default {
           "webhook-timestamp": req.headers.get("webhook-timestamp"),
           "webhook-signature": req.headers.get("webhook-signature"),
         };
-        let webhookPayload;
+
+        const base64Secret = Buffer.from(env.POLAR_WEBHOOK_SECRET, "utf-8").toString("base64");
+        const webhook = new Webhook(base64Secret);
         try {
-          webhookPayload = validateEvent(requestBody, webhookHeaders, env.POLAR_WEBHOOK_SECRET,
-          );
+          webhook.verify(requestBody, webhookHeaders);
         } catch (error) {
-          console.log(error);
+          console.log(123, error.message || error.toString())
         }
-        console.log(JSON.parse(requestBody))
+
+        console.log(456, JSON.parse(requestBody))
         return new Response(JSON.stringify({ received: true }), {
           status: 200,
           headers: {
