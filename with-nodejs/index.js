@@ -1,4 +1,4 @@
-import '@dotenvx/dotenvx/config';
+// import '@dotenvx/dotenvx/config';
 import { Polar } from '@polar-sh/sdk';
 import { z } from 'zod';
 import { validateEvent } from "@polar-sh/sdk/webhooks";
