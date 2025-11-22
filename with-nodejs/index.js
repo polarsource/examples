@@ -1,6 +1,7 @@
 import '@dotenvx/dotenvx/config';
 import { Polar } from '@polar-sh/sdk';
 import { z } from 'zod';
+import { validateEvent } from "@polar-sh/sdk/webhooks";
 
 const envSchema = z.object({
   POLAR_MODE: z.enum(['sandbox', 'production']).default('production'),
