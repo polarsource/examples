@@ -1,7 +1,7 @@
 {
   "name": "with-nodejs",
   "scripts": {
-    "dev": "node api/index.js",
+    "dev": "node index.js",
     "format": "prettier --write '**/*' --ignore-unknown"
   },
   "dependencies": {
