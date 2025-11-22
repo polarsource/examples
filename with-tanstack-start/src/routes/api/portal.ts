@@ -1,9 +1,8 @@
 import { env } from '@/config/env'
 import { CustomerPortal } from '@polar-sh/tanstack-start'
 import { createFileRoute } from '@tanstack/react-router'
-import { getPolarClient } from '../polarClient'
+import { polar } from '../polar'
 import { z } from 'zod'
-import { error } from 'console'
 
 const searchSchema = z.object({
   email: z.string(),
@@ -20,7 +19,6 @@ export const Route = createFileRoute('/api/portal')({
 
           if (!email) throw new Error('Email is required')
 
-          const polar = getPolarClient()
           const list = await polar.customers.list({ email })
 
           if (list?.result?.items?.length) {

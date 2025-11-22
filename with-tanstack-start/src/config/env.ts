@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import 'dotenv/config'
+import '@dotenvx/dotenvx/config'
 
 const envSchema = z.object({
   POLAR_MODE: z.enum(['sandbox', 'production']).default('production'),
