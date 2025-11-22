@@ -52,9 +52,7 @@ export default {
         } catch (error) {
           console.log(error.message || error.toString())
         }
-        console.log(JSON.parse(requestBody))
-        return new Response(JSON.stringify({ received: true }), {
-          status: 200,
+        return new Response(requestBody, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -64,18 +62,16 @@ export default {
       if (pathname === '/checkout' && method === 'GET') {
       const productIds = url.searchParams.get('products')
       if (!productIds) {
-        return new Response(JSON.stringify({ error: 'Missing products parameter' }), {
+        return new Response(null, {
           status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          statusText: 'Missing products parameter'
         })
       }
       const checkoutSession = await polar.checkouts.create({
         products: typeof productIds === 'string' ? [productIds] : productIds,
         successUrl: env.POLAR_SUCCESS_URL || `http://${req.headers.host}/`,
       })
-      return new Response(JSON.stringify({ url: checkoutSession.url }), {
+      return new Response(null, {
         status: 302,
         headers: {
           'Location': checkoutSession.url,
@@ -86,46 +82,35 @@ export default {
     if (pathname === '/portal' && method === 'GET') {
       const email = url.searchParams.get('email')
       if (!email) {
-        return new Response(JSON.stringify({ error: 'Missing email parameter' }), {
+        return new Response(null, {
           status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          statusText: 'Missing email parameter'
         })
       }
       const customer = await polar.customers.list({ email })
       if (!customer.result.items.length) {
-        return new Response(JSON.stringify({ error: 'Customer not found' }), {
+        return new Response(null, {
           status: 404,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          statusText: 'Customer not found'
         })
       }
       const session = await polar.customerSessions.create({
         customerId: customer.result.items[0].id
       })
-      return new Response(JSON.stringify({ url: session.customerPortalUrl }), {
+      return new Response(null, {
         status: 302,
         headers: {
           'Location': session.customerPortalUrl,
         },
       })
     }
-    // 404 Not Found
-    return new Response(JSON.stringify({ error: 'Not found' }), {
-      status: 404,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    // 405 Method Not Allowed
+    return new Response(null, {
+      status: 405,
     })
   } catch(error) {
-    console.error('Error:', error)
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(error.message || error.toString(), {
       status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     })
   }
 },
