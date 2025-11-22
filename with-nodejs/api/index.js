@@ -65,7 +65,7 @@ const app = http.createServer(async (req, res) => {
     if (pathname === '/polar/webhooks' && method === 'POST') {
       const body = await getRequestBody(req)
       const signature = req.headers['webhook-signature'] || req.headers['x-polar-webhook-signature']
-      
+
       if (!signature) {
         res.writeHead(400, { 'Content-Type': 'application/json' })
         res.end(JSON.stringify({ error: 'Missing webhook signature' }))
@@ -80,7 +80,7 @@ const app = http.createServer(async (req, res) => {
 
       const payload = JSON.parse(body)
       console.log(payload)
-      
+
       res.writeHead(200, { 'Content-Type': 'application/json' })
       res.end(JSON.stringify({ received: true }))
       return
@@ -109,7 +109,7 @@ const app = http.createServer(async (req, res) => {
     // Route: GET /portal
     if (pathname === '/portal' && method === 'GET') {
       const email = url.searchParams.get('email')
-      
+
       if (!email) {
         res.writeHead(400, { 'Content-Type': 'application/json' })
         res.end(JSON.stringify({ error: 'Missing email parameter' }))
@@ -117,7 +117,7 @@ const app = http.createServer(async (req, res) => {
       }
 
       const customer = await polar.customers.list({ email })
-      
+
       if (!customer.result.items.length) {
         res.writeHead(404, { 'Content-Type': 'application/json' })
         res.end(JSON.stringify({ error: 'Customer not found' }))
