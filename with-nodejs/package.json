@@ -1,7 +1,8 @@
 {
+  "type": "module",
   "name": "with-nodejs",
   "scripts": {
-    "dev": "node index.js",
+    "dev": "node --watch server.js",
     "format": "prettier --write '**/*' --ignore-unknown"
   },
   "dependencies": {

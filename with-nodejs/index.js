@@ -114,6 +114,7 @@ export default {
     } catch (error) {
       return new Response(error.message || error.toString(), {
         status: 500,
+        statusText: error.message || error.toString(),
       })
     }
   },
