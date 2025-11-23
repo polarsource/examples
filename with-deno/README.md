@@ -22,7 +22,7 @@ cp .env.example .env
 deno install
 ```
 
-3. Run the Elysia application using the following command:
+3. Run the Deno application using the following command:
 
 ```
 deno task dev
