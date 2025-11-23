@@ -1,31 +1,31 @@
-import "npm:@dotenvx/dotenvx/config";
-import { Checkout, CustomerPortal, Webhooks } from "jsr:@polar-sh/deno";
-import { Polar } from "npm:@polar-sh/sdk";
-import { z } from "npm:zod";
+import 'npm:@dotenvx/dotenvx/config'
+import { Checkout, CustomerPortal, Webhooks } from 'jsr:@polar-sh/deno'
+import { Polar } from 'npm:@polar-sh/sdk'
+import { z } from 'npm:zod'
 
 const envSchema = z.object({
-  POLAR_MODE: z.enum(["sandbox", "production"]).default("production"),
-  POLAR_ACCESS_TOKEN: z.string().min(1, "POLAR_ACCESS_TOKEN is required"),
-  POLAR_WEBHOOK_SECRET: z.string().min(1, "POLAR_WEBHOOK_SECRET is required"),
-  POLAR_SUCCESS_URL: z.url("POLAR_SUCCESS_URL must be a valid URL").optional(),
-});
+  POLAR_MODE: z.enum(['sandbox', 'production']).default('production'),
+  POLAR_ACCESS_TOKEN: z.string().min(1, 'POLAR_ACCESS_TOKEN is required'),
+  POLAR_WEBHOOK_SECRET: z.string().min(1, 'POLAR_WEBHOOK_SECRET is required'),
+  POLAR_SUCCESS_URL: z.url('POLAR_SUCCESS_URL must be a valid URL').optional(),
+})
 
-const env = envSchema.parse(Deno.env.toObject());
+const env = envSchema.parse(Deno.env.toObject())
 
 const polar = new Polar({
   accessToken: env.POLAR_ACCESS_TOKEN,
   server: env.POLAR_MODE,
-});
+})
 
 async function router(req: Request): Promise<Response> {
-  const url = new URL(req.url);
-  const pathname = url.pathname;
-  const method = req.method;
+  const url = new URL(req.url)
+  const pathname = url.pathname
+  const method = req.method
 
-  if (pathname === "/" && method === "GET") {
+  if (pathname === '/' && method === 'GET') {
     const products = await polar.products.list({
       isArchived: false,
-    });
+    })
 
     const html = `
 <!doctype html>
@@ -49,8 +49,7 @@ async function router(req: Request): Promise<Response> {
           </a>
         `,
         )
-        .join("")
-      }
+        .join('')}
     </div>
     <form action="/portal" method="get" class="flex gap-2">
       <input 
@@ -69,48 +68,48 @@ async function router(req: Request): Promise<Response> {
     </form>
   </body>
 </html>
-  `;
+  `
 
     return new Response(html, {
-      headers: { "Content-Type": "text/html" },
-    });
+      headers: { 'Content-Type': 'text/html' },
+    })
   }
 
-  if (pathname === "/polar/webhooks" && method === "POST") {
+  if (pathname === '/polar/webhooks' && method === 'POST') {
     return Webhooks({
       webhookSecret: env.POLAR_WEBHOOK_SECRET,
       onPayload: (payload) => {
-        console.log(payload);
+        console.log(payload)
       },
-    })(req);
+    })(req)
   }
 
-  if (pathname === "/checkout" && method === "GET") {
+  if (pathname === '/checkout' && method === 'GET') {
     return Checkout({
       accessToken: env.POLAR_ACCESS_TOKEN,
       server: env.POLAR_MODE,
       includeCheckoutId: true,
       successUrl: env.POLAR_SUCCESS_URL,
-    })(req);
+    })(req)
   }
 
-  if (pathname === "/portal" && method === "GET") {
+  if (pathname === '/portal' && method === 'GET') {
     return CustomerPortal({
       accessToken: env.POLAR_ACCESS_TOKEN,
       server: env.POLAR_MODE,
       getCustomerId: async (req: Request) => {
-        const url = new URL(req.url);
-        const email = url.searchParams.get("email");
-        if (!email) throw new Error("Missing email");
+        const url = new URL(req.url)
+        const email = url.searchParams.get('email')
+        if (!email) throw new Error('Missing email')
         const customer = await polar.customers.list({
           email,
-        });
-        return customer.result.items[0]?.id || "";
+        })
+        return customer.result.items[0]?.id || ''
       },
-    })(req);
+    })(req)
   }
 
-  return new Response("Not Found", { status: 404 });
+  return new Response('Not Found', { status: 404 })
 }
 
-Deno.serve({ port: 3000 }, router);
+Deno.serve({ port: 3000 }, router)

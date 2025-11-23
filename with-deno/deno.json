@@ -1,12 +1,14 @@
 {
   "tasks": {
-    "dev": "deno run --allow-env --allow-net --watch main.ts"
+    "dev": "deno run --allow-env --allow-net --watch main.ts",
+    "format": "prettier --write '**/*' --ignore-unknown"
   },
   "imports": {
     "@polar-sh/deno": "jsr:@polar-sh/deno@^0.1.3",
     "@polar-sh/sdk": "npm:@polar-sh/sdk@^0.41.5",
     "@std/dotenv": "jsr:@std/dotenv@^0.225.5",
     "express": "npm:express@^5.1.0",
+    "prettier": "npm:prettier@^3.6.2",
     "zod": "npm:zod@^4.1.12"
   }
 }
