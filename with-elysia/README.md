@@ -22,7 +22,7 @@ cp .env.example .env
 bun install
 ```
 
-3. Run the Express application using the following command:
+3. Run the Elysia application using the following command:
 
 ```
 bun dev
