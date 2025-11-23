@@ -1,5 +1,4 @@
 import { Elysia } from 'elysia'
-import '@dotenvx/dotenvx/config'
 import { z } from 'zod'
 import { Polar } from '@polar-sh/sdk'
 import { Checkout, Webhooks, CustomerPortal } from '@polar-sh/elysia'
@@ -13,15 +12,11 @@ const envSchema = z.object({
 
 const env = envSchema.parse(process.env)
 
-const polar = new Polar({
-  accessToken: env.POLAR_ACCESS_TOKEN,
-  server: env.POLAR_MODE,
-})
+const polar = new Polar({ accessToken: env.POLAR_ACCESS_TOKEN, server: env.POLAR_MODE })
 
 export default new Elysia()
   .get('/', async () => {
     const products = await polar.products.list({ isArchived: false })
-
     const html = `
 <!doctype html>
 <html>
@@ -30,9 +25,7 @@ export default new Elysia()
     <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-
   <body class="bg-white flex flex-col items-center justify-center gap-16 min-h-screen">
-
     <div class="w-[360px] max-w-[90%] flex flex-col gap-3">
       ${products.result.items
         .map(
@@ -48,13 +41,12 @@ export default new Elysia()
         )
         .join('')}
     </div>
-
     <form action="/portal" method="get" class="flex gap-2">
       <input 
+        required
         type="email" 
         name="email" 
         placeholder="Email"
-        required
         class="px-4 py-2 text-base border rounded-lg w-[260px] focus:outline-none focus:border-black"
       />
       <button 
@@ -64,11 +56,9 @@ export default new Elysia()
         Continue
       </button>
     </form>
-
   </body>
 </html>
   `
-
     return new Response(html, { headers: { 'Content-Type': 'text/html' } })
   })
   .post(
@@ -76,11 +66,10 @@ export default new Elysia()
     Webhooks({
       webhookSecret: env.POLAR_WEBHOOK_SECRET,
       onPayload: async (payload) => {
-        console.log('Webhook Received:', payload)
+        console.log(payload)
       },
     }),
   )
-
   .get(
     '/checkout',
     Checkout({
@@ -90,7 +79,6 @@ export default new Elysia()
       accessToken: env.POLAR_ACCESS_TOKEN,
     }),
   )
-
   .get(
     '/portal',
     CustomerPortal({
@@ -99,7 +87,6 @@ export default new Elysia()
       getCustomerId: async (ctx) => {
         const email = new URL(ctx.url).searchParams.get('email')
         if (!email) throw new Error('Missing email')
-
         const customer = await polar.customers.list({ email })
         return customer.result.items[0].id
       },
