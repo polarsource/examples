@@ -1,0 +1,18 @@
+{
+  "type": "module",
+  "name": "with-elysia",
+  "module": "src/index.js",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "format": "prettier --write '**/*' --ignore-unknown"
+  },
+  "dependencies": {
+    "@polar-sh/elysia": "^0.5.0",
+    "elysia": "latest",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "prettier": "^3.6.2"
+  }
+}
