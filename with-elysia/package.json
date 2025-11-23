@@ -13,7 +13,8 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "prettier": "^3.6.2"
   },
   "module": "src/index.js"
 }
