@@ -1,0 +1,19 @@
+{
+  "type": "module",
+  "name": "notify-users",
+  "scripts": {
+    "start": "dotenvx run -- tsx index.tsx"
+  },
+  "dependencies": {
+    "@polar-sh/sdk": "^0.41.5",
+    "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.51.1",
+    "@types/node": "^22.10.1",
+    "@types/nodemailer": "^6.4.16",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
+
