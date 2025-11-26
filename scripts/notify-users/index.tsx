@@ -200,7 +200,7 @@ If you have any questions, please don't hesitate to reach out.
 async function main() {
   console.log("Starting email campaign...\n");
   // Verify email connection
-  // await transporter.verify();
+  await transporter.verify();
   // console.log("✓ Email server connection verified\n");
   // Fetch customers for the product
   const customers = await getCustomersForProduct(PRODUCT_ID!);
