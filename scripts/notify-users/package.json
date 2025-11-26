@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@polar-sh/sdk": "^0.41.5",
-    "nodemailer": "^6.9.16"
+    "nodemailer": "^7.0.7"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.51.1",
