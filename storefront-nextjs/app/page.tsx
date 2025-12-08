@@ -1,22 +1,17 @@
 import ClientProductList from '@/components/ClientProductList'
 import Footer from '@/components/Footer'
+import env from '@/lib/env'
 import { ModProduct } from '@/lib/types'
 import { Polar } from '@polar-sh/sdk'
 
 export default async function Home() {
   async function getProducts() {
-    if (!process.env.POLAR_ACCESS_TOKEN) throw new Error('POLAR_ACCESS_TOKEN is not set')
-    const polar = new Polar({
-      accessToken: process.env.POLAR_ACCESS_TOKEN,
-    })
-    if (!process.env.POLAR_ORG_ID) throw new Error('POLAR_ORG_ID is not set')
-    const orgResult = await polar.organizations.get({
-      id: process.env.POLAR_ORG_ID,
-    })
+    const polar = new Polar({ accessToken: env.POLAR_ACCESS_TOKEN })
+    const orgResult = await polar.organizations.get({ id: env.POLAR_ORG_ID })
     const result = await polar.products.list({
       limit: 100,
       isArchived: false,
-      organizationId: process.env.POLAR_ORG_ID,
+      organizationId: env.POLAR_ORG_ID,
     })
     const products: ModProduct[] = []
     for await (const page of result) {
@@ -29,7 +24,7 @@ export default async function Home() {
         const checkoutLink = await polar.checkoutLinks.list({
           limit: 1,
           productId: product.id,
-          organizationId: process.env.POLAR_ORG_ID,
+          organizationId: env.POLAR_ORG_ID,
         })
         if (checkoutLink.result?.items?.[0]?.url) products[idx].checkoutLink = checkoutLink.result.items[0].url
       }),
