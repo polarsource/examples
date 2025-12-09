@@ -16,7 +16,7 @@
         "binding": "ASSETS",
     },
     "vars": {
-        "BETTER_AUTH_SECRET": "NaTQv0I7Xy9aDXcrDLxqozIAunw8MMoU",
+        "BETTER_AUTH_SECRET": "...",
         "NEXT_PUBLIC_BETTER_AUTH_URL": "http://localhost:3000",
         "BETTER_AUTH_URL": "http://localhost:3000",
         "DATABASE_URL": "postgresql://...",
