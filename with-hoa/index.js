@@ -5,6 +5,7 @@ import { Polar } from '@polar-sh/sdk'
 import { router } from '@hoajs/router'
 import '@dotenvx/dotenvx/config'
 import { nodeServer } from '@hoajs/adapter'
+import { Webhook } from 'standardwebhooks'
 
 const envSchema = z.object({
   PORT: z.number().default(3000),
@@ -82,6 +83,7 @@ app.post('/polar/webhooks', async (ctx, next) => {
   const webhook = new Webhook(base64Secret)
   try {
     webhook.verify(requestBody, webhookHeaders)
+    const payload = JSON.parse(requestBody)
     ctx.res.body = requestBody
   } catch (error) {
     console.log(error.message || error.toString())
