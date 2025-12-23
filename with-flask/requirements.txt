@@ -1,4 +1,4 @@
-flask==3.1.0
+flask==3.1.1
 python-dotenv==1.0.1
 polar-sdk==0.13.3
 svix==1.44.0
