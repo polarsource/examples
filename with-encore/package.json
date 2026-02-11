@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "name": "with-encore",
+  "scripts": {
+    "dev": "encore run",
+    "format": "prettier --write '**/*' --ignore-unknown"
+  },
+  "dependencies": {
+    "@polar-sh/sdk": "^0.41.5",
+    "standardwebhooks": "^1.0.0",
+    "encore.dev": "^1.46.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
