@@ -1,0 +1,22 @@
+{
+    "name": "polarsource/example-laravel",
+    "description": "Polar with Laravel Example",
+    "type": "project",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^11.0",
+        "polar-sh/sdk": "^0.1.0",
+        "standard-webhooks/standard-webhooks": "dev-main as 1.0.0",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}
