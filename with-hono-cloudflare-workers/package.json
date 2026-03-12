@@ -13,6 +13,6 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "wrangler": "^4.4.0"
+    "wrangler": "^4.59.1"
   }
 }
