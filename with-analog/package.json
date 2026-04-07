@@ -28,7 +28,7 @@
     "@polar-sh/sdk": "^0.42.1",
     "@tailwindcss/vite": "^4.1.4",
     "front-matter": "^4.0.2",
-    "h3": "^1.13.0",
+    "h3": "^1.15.8",
     "marked": "^15.0.7",
     "marked-gfm-heading-id": "^4.1.1",
     "marked-highlight": "^2.2.1",
