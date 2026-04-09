@@ -20,7 +20,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-server-dom-webpack": "19.2.3",
-    "rwsdk": "^1.0.0-beta.42",
+    "rwsdk": "^1.0.7",
     "standardwebhooks": "^1.0.0"
   },
   "devDependencies": {
