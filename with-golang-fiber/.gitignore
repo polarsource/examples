@@ -1,0 +1,4 @@
+.env
+*.exe
+*.test
+bin/
